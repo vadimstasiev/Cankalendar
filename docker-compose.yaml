@@ -1,0 +1,14 @@
+version: '3'
+services:
+  # myapplication:
+  #   image: myapp:1.0
+  #   environment:
+  #     - MONGODB_CONNSTRING=mongodb://DockerDiamond:MongoDBhunter24365fd@10.10.10.26
+  #   ports:
+  #     - 3000:3000
+  mongodb:
+    image: mongo:5.0
+    network_mode: "host"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=DockerDiamond
+      - MONGO_INITDB_ROOT_PASSWORD=MongoDBhunter24365fd
