@@ -15,7 +15,7 @@ const styles = {
 const SvgBackground = (props) => {
 
     return (
-        <div >
+        <div {...props} className={"bg-[url(./img/genericBg.svg)]"} style={styles.svgBackground} >
             {props.children}
         </div>
     )
