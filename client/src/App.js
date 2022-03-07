@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import PostDetails from './components/PostDetails/PostDetails';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
-import Auth from './components/Auth/Auth';
+import Auth from './components/Auth/legacy/Auth';
 import CreatorOrTag from './components/CreatorOrTag/CreatorOrTag';
 
 const App = () => {
