@@ -11,15 +11,15 @@ const CreatorOrTag = () => {
   const dispatch = useDispatch();
   const { posts, isLoading } = useSelector((state) => state.posts);
 
-  const location = useLocation();
+  // const location = useLocation();
 
-  useEffect(() => {
-    if (location.pathname.startsWith('/tags')) {
-      dispatch(getPostsBySearch({ tags: name }));
-    } else {
-      dispatch(getPostsByCreator(name));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (location.pathname.startsWith('/tags')) {
+  //     dispatch(getPostsBySearch({ tags: name }));
+  //   } else {
+  //     dispatch(getPostsByCreator(name));
+  //   }
+  // }, []);
 
   if (!posts.length && !isLoading) return 'No posts';
 
