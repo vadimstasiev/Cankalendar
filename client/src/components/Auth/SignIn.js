@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from "react-router-dom";
 import { RollbackOutlined } from '@ant-design/icons';
-import { signin, signup } from '../../actions/auth';
+import { signin } from '../../actions/auth';
 
 import SvgBackground from "../SvgBackground";
 import { FixedToggle } from "../ThemeToggle";
@@ -23,7 +23,7 @@ const SignIn = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
   
-      dispatch(signin({ email, password }, navigate))
+      dispatch(signin({ email, password }))
         .then(()=> navigate(from) )
         .catch((error) => {
           setAuthError(error.response?.data?.message)

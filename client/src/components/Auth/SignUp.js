@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from "react-router-dom";
 import { RollbackOutlined } from '@ant-design/icons';
 
@@ -7,15 +8,16 @@ import SvgBackground from "../SvgBackground";
 import {FixedToggle} from "../ThemeToggle";
 
 import Background from "../Background";
+import { signup } from '../../actions/auth';
 
 
 
 const SignUp = (props) => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const {state} = useLocation()
+    
     const from = state?state.from:"/"
-    // const [user, loading, error] = useAuthState(auth);
-  
 
 
     const [name, setName] = useState("");
@@ -26,18 +28,20 @@ const SignUp = (props) => {
     const [authError, setAuthError] = useState("");
 
 
-    const handleSubmit = () => {
-      if(password===confirmPassword){
-        // register
-      } else {
-        setAuthError("Passwords must match.")
-      }
-    }
+    const handleSubmit = (e) => {
+      e.preventDefault();
+  
+      dispatch(signup({ name, email, password, confirmPassword }))
+        .then(()=> navigate(from) )
+        .catch((error) => {
+          setAuthError(error.response?.data?.message)
+          console.log(error.response?.data?.message);
+        })
+    };
 
-
-    // useEffect(() => {
-    //   if (user) navigate(from);
-    // }, [user, loading]);
+    useEffect(() => {
+      if (JSON.parse(localStorage.getItem('profile'))) navigate(from);
+    }, []);
 
     return (
       <Background>
