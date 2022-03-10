@@ -1,30 +1,39 @@
 import React, {useState, useEffect} from "react";
+import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from "react-router-dom";
 import { RollbackOutlined } from '@ant-design/icons';
-
+import { signin, signup } from '../../actions/auth';
 
 import SvgBackground from "../SvgBackground";
 import { FixedToggle } from "../ThemeToggle";
 import Background from '../Background';
 
 const SignIn = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const {state} = useLocation()
+
     const from = state?state.from:"/"
-    // const [user, loading, error] = useAuthState(auth);
+
+    const [user, setUser] = useState();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [authError, setAuthError] = useState("");
 
-    const handleSubmit = e => {
-        
+    const handleSubmit = (e) => {
+      e.preventDefault();
+  
+      dispatch(signin({ email, password }, navigate))
+        .then(()=> navigate(from) )
+        .catch((error) => {
+          setAuthError(error.response?.data?.message)
+          console.log(error.response?.data?.message);
+        })
     };
 
-
-
     useEffect(() => {
-      if (user) navigate(from);
-    }, [user, loading]);
+      if (JSON.parse(localStorage.getItem('profile'))) navigate(from);
+    }, []);
 
     return (
       <Background>
@@ -58,7 +67,6 @@ const SignIn = () => {
                       Sign In
                   </button>
                   <div className="inline-block align-baseline font-bold text-sm ml-20 text-gray-500">
-                      <div className="hover:text-gray-800 cursor-pointer" onClick={() => navigate('/ResetPassword', {state:{from}})}>Forgot Password?</div>
                       <div className="hover:text-gray-800 cursor-pointer" onClick={() => navigate('/SignUp', {state:{from}})}>Don't have an account? Sign Up!</div>
                   </div>
                 </div>
