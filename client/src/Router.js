@@ -18,9 +18,9 @@ const AppRouter = () => {
           <Routes>
             <Route path="/signup" exact element={<SignUp/>} />
             <Route path="/signin" exact element={<SignIn/>} />
-            {/* <Route path="/" exact element={<Home/>} />
-            <Route path="/" exact element={() => <Navigate to="/posts" />} />
-            <Route path="/posts" exact element={<Home/>} /> */}
+            <Route path="/" exact element={<Home/>} />
+            {/* <Route path="/" exact element={() => <Navigate to="/posts" />} /> */}
+            {/* <Route path="/posts" exact element={<Home/>} /> */}
             {/* <Route path="/posts/search" exact element={<Home/>} /> */}
             {/* <Route path="/posts/:id" exact element={<PostDetails/>} /> */}
             {/* <Route path={['/creators/:name', '/tags/:name']} element={<CreatorOrTag/>} /> */}
