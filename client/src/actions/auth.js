@@ -1,4 +1,4 @@
-import { AUTH } from '../constants/actionTypes';
+import { AUTH, LOGOUT } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 export const signin = formData => dispatch => new Promise( async (resolve, reject) => {
@@ -21,4 +21,11 @@ export const signup = formData => dispatch => new Promise( async (resolve, rejec
       reject(error)
     }
   }
+)
+
+export const signout = () => dispatch => new Promise( async (resolve, reject) => {
+  dispatch({ type: LOGOUT })
+  await new Promise(resolve => setTimeout(resolve, 500))
+  resolve()
+}
 )

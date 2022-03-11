@@ -1,24 +1,23 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { signout } from "../../actions/auth";
 
 import Loading from "./Loading"
-// import { logout } from "../../firebase";
-
-// import { auth } from "../../firebase";
-// import { useAuthState } from "react-firebase-hooks/auth";
 
 const SignOut = (props) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate()
     const {state} = useLocation()
     const from = state?state.from:"/"
-    // const [user, loading, error] = useAuthState(auth);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));    
 
-    // setTimeout(logout, 500) 
     
 
-    // useEffect(() => {
-    //   if (!user) navigate(from);
-    // }, [user, loading]);
+    useEffect(() => {
+      dispatch(signout()).then(()=>navigate(from))
+
+    }, [user]);
 
     return (
       <Loading/>
