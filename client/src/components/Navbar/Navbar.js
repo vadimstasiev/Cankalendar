@@ -211,7 +211,7 @@ const Header = () => {
 
     return (
       <header>
-        <nav id="header" className=" w-full top-0">
+        <nav id="header" className=" w-full top-0 transition-all dark:bg-gradient-to-r dark:from-zinc-700">
           <div className={`order-1 flex transform fixed transition-all duration-1000 md:hidden ${isActive ? "z-10":"z-0"}`}>
             <div className={isActive ? activeSide:hiddenSide}>
               <ul className="md:flex text-base text-zinc-700 pt-4 pt-14">
@@ -223,7 +223,7 @@ const Header = () => {
                   user?
                     <>
                       <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/AccountSettings')}>Account settings</a></li>
-                      <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Messages')}>Messages</a></li>
+                      <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Tickets')}>Tickets</a></li>
                       <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/ViewPersonal')}>View Listed</a></li>
                       <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/SignOut')}>Sign Out</a></li>
 
@@ -254,17 +254,19 @@ const Header = () => {
               <nav>
                 <ul className="md:flex items-center justify-between text-base text-zinc-700 pt-4 md:pt-0">
                   <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Browse')}>Browse</a></li>
-                  <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Messages')}>Messages</a></li>
+                  <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Tickets')}>Tickets</a></li>
                   <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/FAQ')}>FAQ</a></li>
                 </ul>
               </nav>
             </div>
             <div className="lg:order-4 order-6">
               <a onClick={() => navigate(`/`)} className="cursor-pointer flex items-center tracking-wide no-underline hover:no-underline font-bold text-xl text-zinc-800 dark:text-zinc-100 hover:text-black dark:hover:text-white" >
-                <svg className="fill-current mr-2 text-zinc-800 dark:text-zinc-100 dark:hover:text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path d="M5,22h14c1.103,0,2-0.897,2-2V9c0-0.553-0.447-1-1-1h-3V7c0-2.757-2.243-5-5-5S7,4.243,7,7v1H4C3.447,8,3,8.447,3,9v11 C3,21.103,3.897,22,5,22z M9,7c0-1.654,1.346-3,3-3s3,1.346,3,3v1H9V7z M5,10h2v2h2v-2h6v2h2v-2h2l0.002,10H5V10z" />
+                <svg className="fill-current mr-2 text-zinc-800 dark:text-zinc-100 dark:hover:text-white" viewBox="0 0 500 500" width={40}>
+                  <path d="M 278.689 361.061 C 278.689 361.061 277.254 361.351 346.91 360.954 L 253.94 240.498 L 292.895 204.151 C 303.087 194.694 313.465 185.428 324.024 176.357 C 333.931 167.858 349.351 164.418 362.667 164.418 C 362.803 164.418 362.667 159.733 362.667 159.733 C 362.667 159.733 362.608 159.712 315.154 160.947 C 314.926 160.953 315.02 169.9 313.997 171.995 C 311.369 177.375 307.29 181.945 303.001 186.194 C 283.396 205.489 233.615 251.784 227.972 257.018 C 227.858 247.515 227.977 164.27 227.977 164.27 L 257.57 164.276 L 257.57 159.59 L 171.3 159.59 L 171.3 164.276 L 197.546 164.254 L 197.603 355.783 L 170.325 355.773 L 170.325 361.001 C 170.319 360.93 257.212 361.001 257.212 361.001 L 257.212 355.91 L 227.768 355.915 L 227.79 265.417 C 227.745 265.406 229.934 263.651 231.46 262.427 C 234.324 265.867 237.647 269.85 237.681 269.861 L 305.355 355.833 L 278.689 355.838 L 278.689 361.061 Z" />
+                  <path d="M 349.372 152.992 C 313.481 135.905 267.087 130.022 223.414 137.024 C 185.786 143.27 152.088 156.535 126.794 175.069 C 65.791 219.497 47.773 283.135 80.511 338.179 C 101.091 372.278 139.749 403.689 194.398 418.398 C 216.489 424.267 240.166 427.438 264.161 427.733 C 267.432 427.766 270.693 427.657 273.938 427.405 C 304.701 424.913 333.755 417.128 357.879 404.915 C 366.795 400.438 379.468 391.052 388.786 382.697 C 418.611 355.954 413.824 322.39 413.824 322.39 L 402.282 322.348 C 402.282 322.348 401.483 330.597 401.343 334.283 C 399.885 344.68 395.941 355.703 388.056 364.962 C 385.36 368.219 382.59 371.433 379.825 374.601 C 352.228 406.253 289.561 421.296 231.669 409.883 C 202.024 403.924 173.566 392.449 157.824 377.617 C 143.366 363.995 99.206 334.632 110.522 262.386 C 114.986 233.886 122.105 224.19 129.717 212.881 C 145.942 188.775 176.327 167.826 188.383 161.449 C 193.406 158.792 221.988 148.625 235.628 147.094 C 263.627 143.951 333.318 145.602 365.169 170.997 C 384.41 186.425 396.983 204.701 401.686 224.049 C 402.211 226.783 403.721 232.248 403.721 232.248 L 414.421 232.248 L 414.492 147.294 L 401.845 147.311 C 401.957 147.311 401.822 150.627 401.755 152.25 C 401.456 160.643 386.914 163.497 375.324 162.259 C 365.077 161.156 357.353 156.846 349.372 152.992 Z M 1143.745 23.735 L 1143.745 25.065 L 1138.368 25.065 L 1138.368 34.823 L 1136.174 34.823 L 1136.174 25.065 L 1130.797 25.065 L 1130.797 23.735 L 1143.745 23.735 Z M 1148.106 23.735 L 1151.215 23.735 L 1155.789 33.112 L 1160.339 23.735 L 1163.403 23.735 L 1163.403 34.823 L 1161.348 34.823 L 1161.348 28.272 L 1161.368 27.153 L 1161.39 25.469 L 1156.84 34.823 L 1154.69 34.823 L 1150.117 25.469 L 1150.117 25.805 L 1150.142 27.043 L 1150.187 28.264 L 1150.187 34.804 L 1148.106 34.804 L 1148.106 23.735 Z" transform="matrix(0.999848, 0.017451, -0.017451, 0.999848, 2.071659, -20.855738)"/>
+                  <g transform="matrix(5.671142, 0, 0, 5.486385, 63.055569, 119.590775)"/>
                 </svg>
-                LocableCom
+                CanKalendar
               </a>
             </div>
             <div className="z-50 lg:order-5 order-7 hidden md:flex relative items-center " id="nav-content">
