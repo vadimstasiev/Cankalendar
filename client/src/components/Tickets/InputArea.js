@@ -40,8 +40,8 @@ const InputArea = () => {
   }, []);
 
   return (
-    <main className="dark:bg-zinc-800 transition z-30 duration-300 relative border dark:border-gray-500 dark:hover:border-gray-300  rounded-md overflow-hidden w-3/4 sm:max-w-md md:max-w-md lg:max-w-lg mx-auto mt-10 mb-5 shadow-md transition cursor-text">
-      <form onSubmit={handleSubmit} className="px-2 pt-2 pb-1">
+    <main className="dark:bg-zinc-800 transition duration-300 relative border dark:border-gray-500 dark:hover:border-gray-300  rounded-md overflow-hidden w-3/4 sm:max-w-md md:max-w-md lg:max-w-lg mx-auto mt-10 mb-5 shadow-md transition cursor-text">
+      <form onSubmit={handleSubmit} className="px-2 pt-2 pb-1 ">
         <div className="flex flex-col ">
           {showInput && (
             <input
@@ -51,12 +51,12 @@ const InputArea = () => {
               value={inputTitle}
               onChange={(e) => setInputTitle(e.target.value)}
               onFocus={() => setShowInput(true)}
-              className="dark:bg-zinc-800 transition duration-300 font-medium px-1 pt-1 py-1 outline-none font-roboto text-base sm:text-sm md:text-sm lg:text-sm dark:bg-background dark:text-offwhite"
+              className="dark:bg-zinc-800 transition duration-300 font-medium px-1 pt-1 py-1 outline-none font-roboto text-base sm:text-sm md:text-sm lg:text-sm dark:bg-background dark:text-white"
             />
           )}
 
           <textarea
-            className="dark:bg-zinc-800 transition duration-300 font-medium px-1 mt-1 my-2 outline-none font-roboto text-base sm:text-sm md:text-sm lg:text-sm dark:bg-background dark:text-offwhite"
+            className="dark:bg-zinc-800 transition duration-300 font-medium px-1 mt-1 my-2 outline-none font-roboto text-base sm:text-sm md:text-sm lg:text-sm dark:bg-background dark:text-white"
             type="text"
             rows="3"
             cols="20"
@@ -75,7 +75,7 @@ const InputArea = () => {
               type="submit"
               tabIndex="0"
               disabled={!inputBody && !inputTitle}
-              className="transition duration-300 font-bold text-xs font-roboto text-gray-700 bg-gray-100 rounded-md px-5 py-2 mr-1 mb-1 md:mr-1.5 md:mb-1.5 select-none hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:text-offwhite dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600"
+              className="transition duration-300 font-bold text-xs font-roboto text-gray-700 bg-gray-100 rounded-md px-5 py-2 mr-1 mb-1 md:mr-1.5 md:mb-1.5 select-none hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600"
             >
               Done
             </button>
