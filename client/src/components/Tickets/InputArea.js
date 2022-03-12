@@ -1,0 +1,91 @@
+import { useState, useRef, useEffect } from "react";
+// import db from "../assets/firebase/firebase";
+// import firebase from "firebase/app";
+
+const InputArea = () => {
+  const [inputTitle, setInputTitle] = useState("");
+  const [inputBody, setInputBody] = useState("");
+  const [showInput, setShowInput] = useState(false);
+
+  const titleRef = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    //adds new todo to 'keepList' collection
+    // db.collection("keepList").add({
+    //   title: inputTitle,
+    //   body: inputBody,
+    //   timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+    // });
+
+    setInputBody("");
+    setInputTitle("");
+    setShowInput(false);
+  };
+
+  //closes the title if clicked outside of inputArea
+  const handleClickOutside = (e) => {
+    const { current: wrap } = titleRef;
+    if (wrap && !wrap.contains(e.target)) {
+      setShowInput(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <main className="dark:bg-zinc-800 transition z-30 duration-300 relative border dark:border-gray-500 dark:hover:border-gray-300  rounded-md overflow-hidden w-3/4 sm:max-w-md md:max-w-md lg:max-w-lg mx-auto mt-10 mb-5 shadow-md transition cursor-text">
+      <form onSubmit={handleSubmit} className="px-2 pt-2 pb-1">
+        <div className="flex flex-col ">
+          {showInput && (
+            <input
+              ref={titleRef}
+              type="text"
+              placeholder="Title"
+              value={inputTitle}
+              onChange={(e) => setInputTitle(e.target.value)}
+              onFocus={() => setShowInput(true)}
+              className="dark:bg-zinc-800 transition duration-300 font-medium px-1 pt-1 py-1 outline-none font-roboto text-base sm:text-sm md:text-sm lg:text-sm dark:bg-background dark:text-offwhite"
+            />
+          )}
+
+          <textarea
+            className="dark:bg-zinc-800 transition duration-300 font-medium px-1 mt-1 my-2 outline-none font-roboto text-base sm:text-sm md:text-sm lg:text-sm dark:bg-background dark:text-offwhite"
+            type="text"
+            rows="3"
+            cols="20"
+            placeholder="Take a note..."
+            value={inputBody}
+            onChange={(e) => setInputBody(e.target.value)}
+            onFocus={() => setShowInput(true)}
+            style={{ resize: "none" }}
+          />
+        </div>
+
+        {inputTitle || inputBody ? (
+          <div className="flex justify-end m-0">
+            <button
+              onFocus={() => setShowInput(true)}
+              type="submit"
+              tabIndex="0"
+              disabled={!inputBody && !inputTitle}
+              className="transition duration-300 font-bold text-xs font-roboto text-gray-700 bg-gray-100 rounded-md px-5 py-2 mr-1 mb-1 md:mr-1.5 md:mb-1.5 select-none hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:text-offwhite dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600"
+            >
+              Done
+            </button>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </form>
+    </main>
+  );
+};
+
+export default InputArea;

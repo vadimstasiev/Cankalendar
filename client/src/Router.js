@@ -10,6 +10,7 @@ import SignIn from './components/Auth/SignIn';
 // import CreatorOrTag from './components/CreatorOrTag/CreatorOrTag';
 import NotFound from './components/NotFound';
 import SignOut from './components/Auth/SignOut';
+import Tickets from './components/Tickets/Tickets';
 
 const AppRouter = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -21,6 +22,7 @@ const AppRouter = () => {
             <Route path="/signin" exact element={<SignIn/>} />
             <Route path="/signout" exact element={<SignOut/>} />
             <Route path="/" exact element={<Home/>} />
+            <Route path="/Tickets" exact element={<Tickets/>} />
             {/* <Route path="/" exact element={() => <Navigate to="/posts" />} /> */}
             {/* <Route path="/posts" exact element={<Home/>} /> */}
             {/* <Route path="/posts/search" exact element={<Home/>} /> */}
