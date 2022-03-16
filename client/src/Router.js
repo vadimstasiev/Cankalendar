@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 // import PostDetails from './components/PostDetails/PostDetails';
 // import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
+import HomeLegacy from './components/Home/legacy/Home'
 import SignUp from './components/Auth/SignUp';
 import SignIn from './components/Auth/SignIn';
 // import CreatorOrTag from './components/CreatorOrTag/CreatorOrTag';
@@ -22,6 +23,9 @@ const AppRouter = () => {
             <Route path="/signin" exact element={<SignIn/>} />
             <Route path="/signout" exact element={<SignOut/>} />
             <Route path="/" exact element={<Home/>} />
+
+            <Route path="/legacy" exact element={<HomeLegacy/>} />
+            
             <Route path="/Tickets" exact element={<Tickets/>} />
             {/* <Route path="/" exact element={() => <Navigate to="/posts" />} /> */}
             {/* <Route path="/posts" exact element={<Home/>} /> */}

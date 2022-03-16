@@ -13,7 +13,7 @@ import useStyles from './styles';
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-const Home = () => {
+const HomeLegacy = () => {
   const classes = useStyles();
   const query = useQuery();
   const page = query.get('page') || 1;
@@ -78,4 +78,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeLegacy;

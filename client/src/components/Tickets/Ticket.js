@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Modal from "./Modal";
 
-const ListDetail = ({ title, id, body }) => {
+const Ticket = ({ title, id, body }) => {
   //modal state
   const [showModal, setShowModal] = useState(false);
 
-  //ListDetail renders every individual todo
+  //Ticket renders every individual todo
   return (
     <section
       className="cursor-pointer focus:outline-none  rounded transition duration-300 z-12"
@@ -13,7 +13,7 @@ const ListDetail = ({ title, id, body }) => {
     >
       <div
         onClick={() => setShowModal(true)}
-        className=" overflow-hidden dark:bg-zinc-800 bg-white  relative cursor-pointer shadow-lg hover:shadow-xl dark:shadow-md dark:hover:shadow-xl duration-300 transition border  min-h-10  flex flex-col min-w-xs max-w-xs rounded-md pt-3 p-5 m-auto break-words h-full "
+        className=" overflow-hidden dark:bg-zinc-800 bg-white  relative cursor-pointer shadow-lg hover:shadow-xl dark:shadow-md dark:hover:shadow-xl duration-300 transition border dark:border-gray-500 dark:hover:border-gray-300  min-h-10  flex flex-col min-w-xs max-w-xs rounded-md pt-3 p-5 m-auto break-words h-full "
       >
         <div className="transition flex justify-between">
           {title === "" && body === "" ? (
@@ -42,4 +42,4 @@ const ListDetail = ({ title, id, body }) => {
   );
 };
 
-export default ListDetail;
+export default Ticket;

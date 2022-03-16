@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { createTask, updateTask } from '../../actions/tasks';
 // import db from "../assets/firebase/firebase";
 // import firebase from "firebase/app";
 
@@ -7,10 +9,15 @@ const InputArea = () => {
   const [inputBody, setInputBody] = useState("");
   const [showInput, setShowInput] = useState(false);
 
+  const { tasks, isLoading } = useSelector((state) => state.tasks);
+
+  const dispatch = useDispatch();
   const titleRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     //adds new todo to 'keepList' collection
     // db.collection("keepList").add({
@@ -18,6 +25,13 @@ const InputArea = () => {
     //   body: inputBody,
     //   timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
     // });
+
+    // if (currentId === 0) {
+      dispatch(createTask({ title: inputTitle, message: inputBody, creator: user.result.email }));
+    // } else {
+    //   // dispatch(updateTask(currentId, { ...postData, name: user?.result?.name }));
+    // }
+  
 
     setInputBody("");
     setInputTitle("");

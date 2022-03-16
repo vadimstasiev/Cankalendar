@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 
 import postRoutes from './routes/posts.js';
+import taskRoutes from './routes/tasks.js';
 import userRouter from "./routes/user.js";
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
 app.use('/posts', postRoutes);
+app.use('/tasks', taskRoutes);
 app.use("/user", userRouter);
 
 const CONNECTION_URL = 'mongodb://DockerDiamond:MongoDBhunter24365fd@10.10.10.26';

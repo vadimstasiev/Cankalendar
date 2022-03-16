@@ -7,7 +7,7 @@ import Background from '../Background';
 import Navbar from '../MainLayout/Navbar';
 
 const Tickets = () => {
-  //main array to save todos
+  //main array to save tickets
   const [mainTodoList, setMainTodoList] = useState([]);
 
   useEffect(() => {
