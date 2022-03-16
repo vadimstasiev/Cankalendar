@@ -1,16 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTask, updateTask } from '../../actions/tasks';
-// import db from "../assets/firebase/firebase";
-// import firebase from "firebase/app";
+import { useNavigate } from 'react-router-dom';
 
-const InputArea = () => {
+const TicketCreateInput = () => {
   const [inputTitle, setInputTitle] = useState("");
-  const [inputBody, setInputBody] = useState("");
+  const [inputMessage, setInputMessage] = useState("");
   const [showInput, setShowInput] = useState(false);
 
   const { tasks, isLoading } = useSelector((state) => state.tasks);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const titleRef = useRef(null);
 
@@ -19,21 +19,9 @@ const InputArea = () => {
 
     const user = JSON.parse(localStorage.getItem('profile'));
 
-    //adds new todo to 'keepList' collection
-    // db.collection("keepList").add({
-    //   title: inputTitle,
-    //   body: inputBody,
-    //   timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-    // });
+    dispatch(createTask({ title: inputTitle, message: inputMessage, creator: user?.result?.email }, navigate));
 
-    // if (currentId === 0) {
-      dispatch(createTask({ title: inputTitle, message: inputBody, creator: user.result.email }));
-    // } else {
-    //   // dispatch(updateTask(currentId, { ...postData, name: user?.result?.name }));
-    // }
-  
-
-    setInputBody("");
+    setInputMessage("");
     setInputTitle("");
     setShowInput(false);
   };
@@ -75,20 +63,20 @@ const InputArea = () => {
             rows="3"
             cols="20"
             placeholder="Take a note..."
-            value={inputBody}
-            onChange={(e) => setInputBody(e.target.value)}
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
             onFocus={() => setShowInput(true)}
             style={{ resize: "none" }}
           />
         </div>
 
-        {inputTitle || inputBody ? (
+        {inputTitle || inputMessage ? (
           <div className="flex justify-end m-0">
             <button
               onFocus={() => setShowInput(true)}
               type="submit"
               tabIndex="0"
-              disabled={!inputBody && !inputTitle}
+              disabled={!inputMessage && !inputTitle}
               className="transition duration-300 font-bold text-xs font-roboto text-gray-700 bg-gray-100 rounded-md px-5 py-2 mr-1 mb-1 md:mr-1.5 md:mb-1.5 select-none hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600"
             >
               Done
@@ -102,4 +90,4 @@ const InputArea = () => {
   );
 };
 
-export default InputArea;
+export default TicketCreateInput;

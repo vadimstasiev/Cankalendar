@@ -1,19 +1,22 @@
-import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_POST, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, FETCH_BY_CREATOR } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_SINGLE, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, FETCH_BY_CREATOR, LOGOUT } from '../constants/actionTypes';
 import * as api from '../api/index.js';
+import {signout} from './auth'
 
-export const getTask = (id) => async (dispatch) => {
+export const getTask = (id, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
 
     const { data } = await api.fetchTask(id);
-
-    dispatch({ type: FETCH_POST, payload: { post: data } });
+    dispatch({ type: FETCH_SINGLE, payload: { task: data } });
   } catch (error) {
     console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
   }
 };
 
-export const getTasks = (page) => async (dispatch) => {
+export const getTasks = (page, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data: { data, currentPage, numberOfPages } } = await api.fetchTasks(page);
@@ -22,10 +25,13 @@ export const getTasks = (page) => async (dispatch) => {
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
   }
 };
 
-export const getTasksByCreator = (name) => async (dispatch) => {
+export const getTasksByCreator = (name, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data: { data } } = await api.fetchTasksByCreator(name);
@@ -34,10 +40,13 @@ export const getTasksByCreator = (name) => async (dispatch) => {
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
   }
 };
 
-export const getTasksBySearch = (searchQuery) => async (dispatch) => {
+export const getTasksBySearch = (searchQuery, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data: { data } } = await api.fetchTasksBySearch(searchQuery);
@@ -46,20 +55,26 @@ export const getTasksBySearch = (searchQuery) => async (dispatch) => {
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
   }
 };
 
-export const createTask = (task) => async (dispatch) => {
+export const createTask = (task, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data } = await api.createTask(task);
     dispatch({ type: CREATE, payload: data });
   } catch (error) {
     console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
   }
 };
 
-export const updateTask = (id, task) => async (dispatch) => {
+export const updateTask = (id, task, navigate=()=>{}) => async (dispatch) => {
   try {
     const { data } = await api.updateTask(id, task);
 
@@ -69,12 +84,15 @@ export const updateTask = (id, task) => async (dispatch) => {
   }
 };
 
-export const deleteTask = (id) => async (dispatch) => {
+export const deleteTask = (id, navigate=()=>{}) => async (dispatch) => {
   try {
     await await api.deleteTask(id);
 
     dispatch({ type: DELETE, payload: id });
   } catch (error) {
     console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
   }
 };
