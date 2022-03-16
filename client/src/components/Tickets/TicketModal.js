@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useCallback} from 'react'
 import { useState, useRef } from "react";
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { LoadingOutlined } from '@ant-design/icons';
-import { getTask } from '../../actions/tasks';
+import { getTask, deleteTask, updateTask } from '../../actions/tasks';
 
 
 const TicketModal = ({ id, showModal, setShowModal }) => {
@@ -19,12 +19,12 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
   const { task, isLoading } = useSelector((state) => state.tasks);
 
   const removeTodo = () => {
-    // db.collection("keepList").doc(id).delete();
+    dispatch(deleteTask(id, navigate))
   };
 
   //updates todo when changes are made in modal
   const updateTodo = () => {
-    
+    dispatch(updateTask(id, {...task, title:modalTitle, message:modalMessage}))
   };
 
   const closeModal = (e) => {
@@ -62,12 +62,27 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
     }
   }, [task]);
 
+  const escFunction = useCallback((event) => {
+    if(event.keyCode === 27) {
+      //Do whatever when esc is pressed
+      setShowModal(false)
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
+
   return (
     <div>
       {showModal ? (
         <React.Fragment>
           <div
-            onClick={closeModal}
+            onMouseDown={closeModal}
             ref={modalRef}
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
@@ -100,11 +115,13 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                     />
                     <div className="flex justify-between">
                       <div
-                        onClick={() => removeTodo()}
                         tabIndex="0"
-                        className="cursor-pointer self-end p-4  transition rounded select-none focus:outline-none dark:text-white "
+                        className=" self-end p-4  transition rounded select-none focus:outline-none dark:text-white "
                       >
-                        <DeleteOutlined />
+                        <DeleteOutlined
+                          onClick={() => removeTodo()}
+                          className="cursor-pointer" 
+                        />
                       </div>
                       <button
                         type="submit"
