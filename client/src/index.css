@@ -36,7 +36,7 @@
     }
     
     .react-kanban-card--dragging {
-      box-shadow: 2px 2px grey;
+      /* box-shadow: 2px 2px grey; */
     }
     
     .react-kanban-card__description {

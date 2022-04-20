@@ -6,7 +6,7 @@ import CardAdder from './components/CardAdder'
 import { pickPropOut } from '../../../../services/utils'
 
 const ColumnEmptyPlaceholder = forwardRef((props, ref) => (
-  <div ref={ref} style={{ minHeight: 'inherit', height: 'inherit' }} {...props} />
+  <div ref={ref} {...props} />
 ))
 
 const DroppableColumn = withDroppable(ColumnEmptyPlaceholder)
@@ -36,7 +36,7 @@ function Column({
               verticalAlign: 'top',
               ...columnProvided.draggableProps.style,
             }}
-            className='react-kanban-column bg-zinc-100 dark:bg-zinc-700 dark:text-white w-80 inline-block rounded-xl shadow-xl'
+            className='react-kanban-column bg-zinc-100 dark:bg-zinc-700 dark:text-white w-80 rounded-xl shadow-md'
             data-testid={`column-${children.id}`}
           >
             <div {...columnProvided.dragHandleProps}>{renderColumnHeader(children)}</div>
