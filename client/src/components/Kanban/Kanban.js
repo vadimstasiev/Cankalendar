@@ -5,8 +5,9 @@ import Background from '../Background';
 import Navbar from '../MainLayout/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../MainLayout/Footer';
-import Board, { addColumn, moveCard } from '@asseinfo/react-kanban'
-import '@asseinfo/react-kanban/dist/styles.css'
+import Board, { addColumn, moveCard } from './KanbanBoard'
+// import '@asseinfo/react-kanban/dist/styles.css'
+// import useStyles from './kanbanStyles.css';
 
 
 
@@ -15,7 +16,7 @@ const board = {
   columns: [
     {
       id: 1,
-      title: "Backlog",
+      title: "Tasks",
       cards: [
         {
           id: 1,
@@ -47,7 +48,7 @@ const board = {
     },
     {
       id: 3,
-      title: "Q&A",
+      title: "Complete",
       cards: [
         {
           id: 10,
@@ -57,22 +58,6 @@ const board = {
         {
           id: 11,
           title: "Card title 11",
-          description: "Card content"
-        }
-      ]
-    },
-    {
-      id: 4,
-      title: "Production",
-      cards: [
-        {
-          id: 12,
-          title: "Card title 12",
-          description: "Card content"
-        },
-        {
-          id: 13,
-          title: "Card title 13",
           description: "Card content"
         }
       ]
