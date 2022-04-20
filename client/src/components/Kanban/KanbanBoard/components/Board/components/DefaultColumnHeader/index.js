@@ -42,7 +42,7 @@ export default function ({ children: column, allowRemoveColumn, onColumnRemove, 
         <form onSubmit={handleRenameColumn}>
           <span>
             <input
-              className='dark:bg-zinc-900 px-2 py-1 m-0 rounded-xl'
+              className='dark:bg-zinc-900 ml-1 px-2 py-1 m-0 rounded-xl w-[7.5em]'
               type='text'
               value={titleInput}
               onChange={({ target: { value } }) => setTitleInput(value)}

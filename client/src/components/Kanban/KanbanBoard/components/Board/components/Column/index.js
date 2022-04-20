@@ -36,7 +36,7 @@ function Column({
               verticalAlign: 'top',
               ...columnProvided.draggableProps.style,
             }}
-            className='react-kanban-column dark:bg-zinc-700 dark:text-white w-60 inline-block '
+            className='react-kanban-column bg-zinc-100 dark:bg-zinc-700 dark:text-white w-80 inline-block rounded-xl shadow-xl'
             data-testid={`column-${children.id}`}
           >
             <div {...columnProvided.dragHandleProps}>{renderColumnHeader(children)}</div>

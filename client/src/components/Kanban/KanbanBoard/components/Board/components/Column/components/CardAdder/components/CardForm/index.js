@@ -17,7 +17,7 @@ function CardForm({ onConfirm, onCancel }) {
       <form onSubmit={addCard}>
         <input
           className='react-kanban-card-adder-form__title dark:bg-zinc-900'
-          name='title'
+          name='shit'
           autoFocus
           defaultValue='Title'
           ref={inputCardTitle}

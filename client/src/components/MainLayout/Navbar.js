@@ -203,8 +203,8 @@ const Header = () => {
 
 
 
-  const activeSide = "bg-zinc-300 dark:bg-zinc-900 h-screen w-80 transform transition-all relative duration-700 text-white flex justify-center p-2"
-  const hiddenSide = "bg-zinc-300 dark:bg-zinc-900 h-screen w-80 transform transition-all relative duration-700 text-white flex justify-center p-2 -translate-x-80"
+  const activeSide = "z-50 bg-zinc-300 dark:bg-zinc-900 h-screen w-80 transform transition-all relative duration-700 text-white flex justify-center p-2"
+  const hiddenSide = "z-0 bg-zinc-300 dark:bg-zinc-900 h-screen w-0 transform transition-all relative duration-700 text-white flex justify-center p-2 -translate-x-full"
   const activeButton = "z-20 cursor-pointer transition-all transform duration-700 flex items-center justify-center"
   const normalButton = "z-20 fixed cursor-pointer transition-all transform duration-700 flex items-center justify-center"
 
@@ -214,25 +214,25 @@ const Header = () => {
           <div className={`order-1 flex transform fixed transition-all duration-1000 md:hidden ${isActive ? "z-10":"z-0"}`}>
             <div className={isActive ? activeSide:hiddenSide}>
               <ul className="md:flex text-base text-zinc-700 pt-4 pt-14">
-                <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>Toggle Theme</a></li>
-                <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/ItemCreate')}>Publish an Item</a></li>
-                <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Kanban')}>Kanban</a></li>
-                <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Tickets')}>Tickets</a></li>
-                {
-                  user?
-                    <>
-                      <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/AccountSettings')}>Account settings</a></li>
-                      <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Calendar')}>Calendar</a></li>
-                      <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/ViewPersonal')}>View Listed</a></li>
-                      <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/SignOut')}>Sign Out</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>Toggle Theme</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/ItemCreate')}>Publish an Item</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/Kanban')}>Kanban</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/Tickets')}>Tickets</a></li>
+                  {
+                    user?
+                      <>
+                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/AccountSettings')}>Account settings</a></li>
+                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/Calendar')}>Calendar</a></li>
+                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/ViewPersonal')}>View Listed</a></li>
+                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/SignOut')}>Sign Out</a></li>
 
-                    </>
-                  :
-                    <>
-                      <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/SignIn')}>Sign In</a></li>
-                      <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/SignUp')}>Sign Up</a></li>
-                    </>
-                }
+                      </>
+                    :
+                      <>
+                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/SignIn')}>Sign In</a></li>
+                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive?"":"text-transparent dark:text-transparent"}`} onClick={() => navigate('/SignUp')}>Sign Up</a></li>
+                      </>
+                  }
               </ul>
             </div>
           </div>
