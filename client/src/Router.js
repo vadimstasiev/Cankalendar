@@ -12,6 +12,7 @@ import SignIn from './components/Auth/SignIn';
 import NotFound from './components/NotFound';
 import SignOut from './components/Auth/SignOut';
 import Tickets from './components/Tickets/Tickets';
+import Kanban from './components/Kanban/Kanban';
 
 const AppRouter = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -27,6 +28,7 @@ const AppRouter = () => {
             <Route path="/legacy" exact element={<HomeLegacy/>} />
             
             <Route path="/Tickets" exact element={<Tickets/>} />
+            <Route path="/Kanban" exact element={<Kanban/>} />
             {/* <Route path="/" exact element={() => <Navigate to="/posts" />} /> */}
             {/* <Route path="/posts" exact element={<Home/>} /> */}
             {/* <Route path="/posts/search" exact element={<Home/>} /> */}
