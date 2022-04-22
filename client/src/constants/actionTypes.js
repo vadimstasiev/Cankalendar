@@ -13,3 +13,6 @@ export const FETCH_BY_CREATOR = 'FETCH_BY_CREATOR';
 
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
+
+
+export const SET_SELECTED_PROJECT = 'SET_SELECTED_PROJECT'

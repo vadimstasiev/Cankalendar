@@ -1,16 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
-import { useAuthState } from "react-firebase-hooks/auth";
 
 
 const PrivateRoute = ({from}) => {
-    const [user, loadingUser, error] = useAuthState(auth);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user) navigate("/SignIn", {state:{from}})
-    }, [user, loadingUser]);
+    }, [user]);
 
     return user ? <Outlet /> : <></>
 }

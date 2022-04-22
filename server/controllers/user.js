@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { v4 as uuid } from 'uuid';
 
 import UserModal from "../models/user.js";
 
@@ -35,7 +36,12 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const result = await UserModal.create({ email, password: hashedPassword, name });
+    const projects = {
+      owner: [{name: "Personal" , id: uuid()}], 
+      guest: [], // [...ids]
+    }
+
+    const result = await UserModal.create({ email, password: hashedPassword, name, projects });
 
     const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
 

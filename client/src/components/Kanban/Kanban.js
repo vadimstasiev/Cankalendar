@@ -149,9 +149,9 @@ const UncontrolledBoard = () => {
       allowRemoveLane
       // allowRenameColumn
       allowRemoveCard
-      // onLaneRemove={console.log}
-      // onCardRemove={console.log}
-      // onLaneRename={console.log}
+      onLaneRemove={console.log}
+      onCardRemove={console.log}
+      onLaneRename={console.log}
       initialBoard={board}
       allowAddCard={{ on: "top" }}
       onNewCardConfirm={draftCard => ({
@@ -187,7 +187,7 @@ const Kanban = () => {
         <NoiseBackground>
             <Background className={"dark:bg-transparent min-h-screen"}>
             <Navbar/>
-            <SelectProject/>
+            <SelectProject currentUrl="/Kanban"/>
             {
               id?
                 <UncontrolledBoard id/>

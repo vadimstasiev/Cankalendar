@@ -1,6 +1,18 @@
-import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_SINGLE, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, FETCH_BY_CREATOR, LOGOUT } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_SINGLE, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, FETCH_BY_CREATOR, LOGOUT, SET_SELECTED_PROJECT } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 import {signout} from './auth'
+
+
+export const setSelectedProject = (project, navigate=()=>{}) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_SELECTED_PROJECT, payload: project });
+  } catch (error) {
+    console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
+  }
+};
 
 export const getTask = (id, navigate=()=>{}) => async (dispatch) => {
   try {
