@@ -1,16 +1,61 @@
-import React from 'react'
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import NoiseBackground from '../NoiseBackground';
 import Background from '../Background';
 import Navbar from '../MainLayout/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../MainLayout/Footer';
+import { getTasks, getTasksCumulative } from "../../actions/tasks";
 import Board, { addColumn, moveCard } from './KanbanBoard'
+import SelectProject from "../SelectProject";
 // import '@asseinfo/react-kanban/dist/styles.css'
 // import useStyles from './kanbanStyles.css';
 
 
+// const TicketsList = () => {
+//   const dispatch = useDispatch()
+//   const { tasks, isLoading } = useSelector((state) => state.tasks);
+//   const [section, setSection] = useState(1);
 
+//   const getCurrentVisibleSection = () => {
+//     setSection(section+1)
+//   }
+
+//   useEffect(() => {
+//     if(section===1){
+//       dispatch(getTasks(1))
+//     } else {
+//       dispatch(getTasksCumulative(section))
+//     }
+//   }, [section]);
+
+
+//   //renders the todo array, returns loading if todo hasn't loaded yet
+//   return tasks.length === 0 || undefined || null ? (
+//     // <div className=" fixed top-0 left-0 right-0 bottom-0 w-full h-screen overflow-hidden bg-white dark:bg-zinc-500 opacity-50 flex flex-col items-center justify-center">
+//     <div className=" fixed top-0 left-0 right-0 bottom-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+//       <h2 className="text-center dark:text-white text-lg lg:text-xl font-medium">
+//         Notes you add appear here
+//       </h2>
+//       {/* <OnScreenRender callback={getCurrentVisibleSection}/> */}
+//     </div>
+//   ) : (
+//     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-x-4 gap-y-5 mx-4 sm:mx-12 ">
+//       {tasks?.map((list, i) => {
+//         return (
+//           <div key={list._id}>
+//               {/* <Ticket
+//                 title={list.title}
+//                 id={list._id}
+//                 message={list.message}
+//               /> */}
+//             {/* {tasks.length-1 === i?<OnScreenRender callback={getCurrentVisibleSection}/>:null} */}
+//           </div>
+//         )})
+//       }
+      
+//     </div>
+//   );
+// };
 
 const board = {
   columns: [
@@ -82,14 +127,29 @@ const ControlledBoard = () => {
 }
 
 const UncontrolledBoard = () => {
+  const dispatch = useDispatch()
+  const { tasks, isLoading } = useSelector((state) => state.tasks);
+  const [section, setSection] = useState(1);
+
+  const getCurrentVisibleSection = () => {
+    setSection(section+1)
+  }
+
+  useEffect(() => {
+    if(section===1){
+      dispatch(getTasks(1))
+    } else {
+      dispatch(getTasksCumulative(section))
+    }
+  }, [section]);
   return (
     <Board
       allowRemoveLane
-      allowRenameColumn
+      // allowRenameColumn
       allowRemoveCard
-      onLaneRemove={console.log}
-      onCardRemove={console.log}
-      onLaneRename={console.log}
+      // onLaneRemove={console.log}
+      // onCardRemove={console.log}
+      // onLaneRename={console.log}
       initialBoard={board}
       allowAddCard={{ on: "top" }}
       onNewCardConfirm={draftCard => ({
@@ -124,6 +184,7 @@ const Kanban = () => {
         <NoiseBackground>
             <Background className={"dark:bg-transparent min-h-screen"}>
             <Navbar/>
+            <SelectProject/>
             <UncontrolledBoard />
             {/* <Footer/> */}
             </Background>

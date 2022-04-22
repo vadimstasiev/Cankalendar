@@ -47,6 +47,18 @@ export const getTasksByCreator = async (req, res) => {
     }
 }
 
+// export const getTasksByProject = async (req, res) => {
+//     const { project } = req.query;
+
+//     try {
+//         const tasks = await TaskMessage.find({ project });
+
+//         res.json({ data: tasks });
+//     } catch (error) {    
+//         res.status(404).json({ message: error.message });
+//     }
+// }
+
 export const getTask = async (req, res) => { 
     const { id } = req.params;
 

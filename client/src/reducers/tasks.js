@@ -1,6 +1,6 @@
 import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_BY_SEARCH, FETCH_BY_CREATOR, FETCH_SINGLE, CREATE, UPDATE, DELETE } from '../constants/actionTypes';
 
-export default (state = { isLoading: true, tasks: [] }, action) => {
+export default (state = { isLoading: true, tasks: [], project: {id: "0", name: "Personal"} }, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };
