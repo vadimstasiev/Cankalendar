@@ -7,6 +7,8 @@ import Footer from '../MainLayout/Footer';
 import { getTasks, getTasksCumulative } from "../../actions/tasks";
 import Board, { addColumn, moveCard } from './KanbanBoard'
 import SelectProject from "../SelectProject";
+import { useParams, useNavigate, Link } from 'react-router-dom';
+
 // import '@asseinfo/react-kanban/dist/styles.css'
 // import useStyles from './kanbanStyles.css';
 
@@ -180,12 +182,17 @@ const UncontrolledBoard = () => {
 
 
 const Kanban = () => {
+    const { id } = useParams();
     return (
         <NoiseBackground>
             <Background className={"dark:bg-transparent min-h-screen"}>
             <Navbar/>
             <SelectProject/>
-            <UncontrolledBoard />
+            {
+              id?
+                <UncontrolledBoard id/>
+              :null
+            }
             {/* <Footer/> */}
             </Background>
         </NoiseBackground>

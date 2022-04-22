@@ -29,6 +29,7 @@ const AppRouter = () => {
             
             <Route path="/Tickets" exact element={<Tickets/>} />
             <Route path="/Kanban" exact element={<Kanban/>} />
+            <Route path="/Kanban/:id" exact element={<Kanban/>} />
             {/* <Route path="/" exact element={() => <Navigate to="/posts" />} /> */}
             {/* <Route path="/posts" exact element={<Home/>} /> */}
             {/* <Route path="/posts/search" exact element={<Home/>} /> */}
