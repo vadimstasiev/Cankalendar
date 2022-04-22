@@ -1,16 +1,21 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Popover, Transition, Menu } from '@headlessui/react'
 import { AppstoreAddOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
+import { setSelectedProject } from "../actions/tasks";
 
 
 const SelectProjectDropdown = props => {
     const { children, customClass, currentUrl } = props 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const navigate = useNavigate()
+    const dispatch = useDispatch();
 
-    console.log(user.result.email)
+
+    useEffect(() => {
+        // dispatch(getProjectsList())
+    }, [user]);
 
     if(!user) return <></>
 
@@ -37,8 +42,8 @@ const SelectProjectDropdown = props => {
                     >
                       {
                         user.result.projects?
-                            user.result.projects.owner.map(proj => <>
-                                <div className="py-1">
+                            user.result.projects.owner.map(proj => (
+                                <div className="py-1" key={proj.id}>
                                     <Menu.Item>
                                     {({ active }) => (
                                         <div
@@ -54,7 +59,7 @@ const SelectProjectDropdown = props => {
                                     )}
                                     </Menu.Item>
                                 </div>
-                            </>)
+                            ))
                         :
                             null
                       }
@@ -68,8 +73,14 @@ const SelectProjectDropdown = props => {
     )
   }
 
-const SelectProject = ({currentUrl}) => {
+const SelectProject = ({currentUrl, currentId}) => {
     const { project } = useSelector((state) => state.tasks);
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        dispatch(setSelectedProject(currentId))
+    }, []);
+
     return <div className="dark:bg-zinc-800 transition duration-300 border dark:border-gray-500 dark:hover:border-gray-300  rounded-md overflow-hidden w-3/4 sm:max-w-md md:max-w-md lg:max-w-lg mx-auto mt-10 mb-5 shadow-md transition cursor-text">
         
             <SelectProjectDropdown currentUrl={currentUrl}>

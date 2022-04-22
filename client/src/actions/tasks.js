@@ -3,9 +3,9 @@ import * as api from '../api/index.js';
 import {signout} from './auth'
 
 
-export const setSelectedProject = (project, navigate=()=>{}) => async (dispatch) => {
+export const setSelectedProject = (projectId, navigate=()=>{}) => async (dispatch) => {
   try {
-    dispatch({ type: SET_SELECTED_PROJECT, payload: project });
+    dispatch({ type: SET_SELECTED_PROJECT, payload: {id: projectId, name: "1"} });
   } catch (error) {
     console.log(error);
     if(error.response.status===401){

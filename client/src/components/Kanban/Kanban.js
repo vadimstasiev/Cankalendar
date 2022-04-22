@@ -187,7 +187,7 @@ const Kanban = () => {
         <NoiseBackground>
             <Background className={"dark:bg-transparent min-h-screen"}>
             <Navbar/>
-            <SelectProject currentUrl="/Kanban"/>
+            <SelectProject currentUrl="/Kanban" currentId={id}/>
             {
               id?
                 <UncontrolledBoard id/>
