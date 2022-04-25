@@ -30,5 +30,6 @@ export const deleteTask = (id) => API.delete(`/tasks/${id}`);
 
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
+export const joinProject = (formData) => API.post('/user/joinProject', formData);
 
 // export const fetchProjectName = (id) => API.get(`/tasks/${id}`);

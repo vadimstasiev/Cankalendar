@@ -76,7 +76,7 @@ const SelectProjectDropdown = props => {
 const SelectProject = ({currentUrl, currentId}) => {
     const { project } = useSelector((state) => state.tasks);
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         dispatch(setSelectedProject(currentId))
     }, []);

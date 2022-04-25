@@ -4,6 +4,9 @@ const taskSchema = mongoose.Schema({
     title: String,
     message: String,
     name: String,
+    // projectId: String,
+    // column: Number,
+    // order: Number,
     creator: String,
     createdAt: {
         type: Date,

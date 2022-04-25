@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import TaskMessage from '../models/task.js';
+import Project from '../models/project.js';
 
 const router = express.Router();
 
@@ -47,11 +48,11 @@ export const getTasksByCreator = async (req, res) => {
     }
 }
 
-// export const getTasksByProject = async (req, res) => {
-//     const { project } = req.query;
+// export const getTasksByProjectId = async (req, res) => {
+//     const { projectId } = req.query;
 
 //     try {
-//         const tasks = await TaskMessage.find({ project });
+//         const tasks = await TaskMessage.find({ projectId });
 
 //         res.json({ data: tasks });
 //     } catch (error) {    

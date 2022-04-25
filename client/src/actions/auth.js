@@ -1,4 +1,4 @@
-import { AUTH, LOGOUT } from '../constants/actionTypes';
+import { AUTH, LOGOUT, JOIN_PROJECT } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 export const signin = formData => dispatch => new Promise( async (resolve, reject) => {
@@ -21,6 +21,17 @@ export const signup = formData => dispatch => new Promise( async (resolve, rejec
       reject(error)
     }
   }
+)
+
+export const joinproject = formData => dispatch => new Promise( async (resolve, reject) => {
+  try {
+    const { data } = await api.joinProject(formData);
+    dispatch({ type: JOIN_PROJECT, data });
+    resolve()
+  } catch (error) {
+    reject(error)
+  }
+}
 )
 
 export const signout = () => dispatch => new Promise( async (resolve, reject) => {
