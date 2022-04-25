@@ -25,7 +25,7 @@ export const signup = formData => dispatch => new Promise( async (resolve, rejec
 
 export const joinproject = formData => dispatch => new Promise( async (resolve, reject) => {
   try {
-    const { data } = await api.joinProject(formData);
+    const { data } = await api.joinProject({projectId: formData.id, userEmail: formData.email});
     dispatch({ type: JOIN_PROJECT, data });
     resolve()
   } catch (error) {

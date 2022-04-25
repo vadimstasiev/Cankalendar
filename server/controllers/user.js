@@ -58,6 +58,38 @@ export const signup = async (req, res) => {
 };
 
 // must be middlewared with auth
+export const createProject = async (req, res) => {
+  const { userEmail, projectName } = req.body;
+  const newProject = { id: uuid(), name: projectName }
+
+  const filter = { email: userEmail }
+
+  try {
+    
+    // add project to project.owner in user
+    
+    const user = await UserModal.findOne(filter);
+    if (user) return res.status(400).json({ message: "User email does not exist" });
+    
+    await UserModal.findByIdAndUpdate(filter, {projects: {...user.projects, owner: [...user.projects.owner, newProject]}});
+
+    // add project to projects table
+
+    const existingProject = await Project.create(newProject);
+
+
+    // return updated user object
+
+    const result = await UserModal.findOne(filter);
+
+    res.status(201).json({ result });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+    
+    console.log(error);
+  }
+};
+
 export const joinProject = async (req, res) => {
   const { projectId, userEmail } = req.body;
 
@@ -72,8 +104,10 @@ export const joinProject = async (req, res) => {
 
     if (user) return res.status(400).json({ message: "User email does not exist" });
 
-    await UserModal.findByIdAndUpdate(filter, {projects: {owner: user.projects.owner, guest: {...user.projects.guest, projectId}}});
+    await UserModal.findByIdAndUpdate(filter, {projects: {...user.projects, guest: [...user.projects.guest, projectId]}});
 
+    // return updated user object
+    
     const result = await UserModal.findOne(filter);
 
     res.status(201).json({ result });
