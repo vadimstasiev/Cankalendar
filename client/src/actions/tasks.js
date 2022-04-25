@@ -6,6 +6,7 @@ import {signout} from './auth'
 export const setSelectedProject = (projectId, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: SET_SELECTED_PROJECT, payload: {id: projectId, name: "1"} });
+    console.log("here", projectId)
   } catch (error) {
     console.log(error);
     if(error.response.status===401){

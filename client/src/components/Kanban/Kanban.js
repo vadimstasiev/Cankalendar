@@ -4,10 +4,11 @@ import Background from '../Background';
 import Navbar from '../MainLayout/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../MainLayout/Footer';
-import { getTasks, getTasksCumulative } from "../../actions/tasks";
+import { getTasks, getTasksCumulative, setSelectedProject } from "../../actions/tasks";
 import Board, { addColumn, moveCard } from './KanbanBoard'
 import SelectProject from "../SelectProject";
 import { useParams, useNavigate, Link } from 'react-router-dom';
+
 
 // import '@asseinfo/react-kanban/dist/styles.css'
 // import useStyles from './kanbanStyles.css';
@@ -128,7 +129,7 @@ const ControlledBoard = () => {
   );
 }
 
-const UncontrolledBoard = () => {
+const UncontrolledBoard = ({id}) => {
   const dispatch = useDispatch()
   const { tasks, isLoading } = useSelector((state) => state.tasks);
   const [section, setSection] = useState(1);
@@ -183,6 +184,24 @@ const UncontrolledBoard = () => {
 
 const Kanban = () => {
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // get current project from store
+
+
+    // must check if when loading page with invalid id it goes to default
+
+    // must check if loading page with valid id it selects that id
+
+    useEffect(() => {
+      // dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
+      dispatch(setSelectedProject(id, navigate))
+    }, [id]);
+
+    // useEffect(() => {
+    //   // navigate to that id
+    // }, [current project from store]);
+
     return (
         <NoiseBackground>
             <Background className={"dark:bg-transparent min-h-screen"}>
