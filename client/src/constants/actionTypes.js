@@ -15,5 +15,6 @@ export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
 
 
+export const CREATE_PROJECT = 'CREATE_PROJECT'
 export const JOIN_PROJECT = 'JOIN_PROJECT'
 export const SET_SELECTED_PROJECT = 'SET_SELECTED_PROJECT'

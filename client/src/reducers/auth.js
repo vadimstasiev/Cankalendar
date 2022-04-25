@@ -1,6 +1,7 @@
 import * as actionType from '../constants/actionTypes';
 
 const authReducer = (state = { authData: null }, action) => {
+  const currentProfile = JSON.parse(localStorage.getItem('profile'))
   switch (action.type) {
     case actionType.AUTH:
       localStorage.setItem('profile', JSON.stringify({ ...action?.data }));
@@ -10,11 +11,14 @@ const authReducer = (state = { authData: null }, action) => {
       localStorage.clear();
 
       return { ...state, authData: null, loading: false, errors: null };
-    case actionType.AUTH:
-      const current = JSON.parse(localStorage.getItem('profile'))
-      localStorage.setItem('profile', JSON.stringify({ ...current, ...action?.data }));
+    case actionType.CREATE_PROJECT:
+      localStorage.setItem('profile', JSON.stringify({ ...currentProfile, ...action?.data }));
 
-      return { ...state, authData: { ...current, ...action?.data }, loading: false, errors: null };
+      return { ...state, authData: { ...currentProfile, ...action?.data }, loading: false, errors: null };
+    case actionType.JOIN_PROJECT:
+      localStorage.setItem('profile', JSON.stringify({ ...currentProfile, ...action?.data }));
+
+      return { ...state, authData: { ...currentProfile, ...action?.data }, loading: false, errors: null };
     default:
       return state;
   }

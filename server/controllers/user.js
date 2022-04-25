@@ -57,7 +57,6 @@ export const signup = async (req, res) => {
   }
 };
 
-// must be middlewared with auth
 export const createProject = async (req, res) => {
   const { userEmail, projectName } = req.body;
   const newProject = { id: uuid(), name: projectName }
@@ -91,7 +90,7 @@ export const createProject = async (req, res) => {
 };
 
 export const joinProject = async (req, res) => {
-  const { projectId, userEmail } = req.body;
+  const { projectId, userEmail, userRole } = req.body;
 
   const filter = { email: userEmail }
 
