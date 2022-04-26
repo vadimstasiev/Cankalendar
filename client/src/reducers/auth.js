@@ -11,11 +11,15 @@ const authReducer = (state = { authData: null }, action) => {
       localStorage.clear();
 
       return { ...state, authData: null, loading: false, errors: null };
-    case actionType.CREATE_PROJECT:
-      localStorage.setItem('profile', JSON.stringify({ ...currentProfile, ...action?.data }));
+    // case actionType.CREATE_PROJECT:
+    //   localStorage.setItem('profile', JSON.stringify({ ...currentProfile, ...action?.data }));
 
-      return { ...state, authData: { ...currentProfile, ...action?.data }, loading: false, errors: null };
-    case actionType.JOIN_PROJECT:
+    //   return { ...state, authData: { ...currentProfile, ...action?.data }, loading: false, errors: null };
+    // case actionType.JOIN_PROJECT:
+    //   localStorage.setItem('profile', JSON.stringify({ ...currentProfile, ...action?.data }));
+
+    //   return { ...state, authData: { ...currentProfile, ...action?.data }, loading: false, errors: null };
+    case actionType.UPDATE_PROJECTS:
       localStorage.setItem('profile', JSON.stringify({ ...currentProfile, ...action?.data }));
 
       return { ...state, authData: { ...currentProfile, ...action?.data }, loading: false, errors: null };

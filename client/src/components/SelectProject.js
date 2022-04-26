@@ -4,6 +4,7 @@ import { Popover, Transition, Menu } from '@headlessui/react'
 import { AppstoreAddOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { setSelectedProject } from "../actions/tasks";
+import { getProjectsList } from "../actions/auth";
 
 
 const SelectProjectDropdown = props => {
@@ -73,13 +74,30 @@ const SelectProjectDropdown = props => {
     )
   }
 
-const SelectProject = ({currentUrl, currentId}) => {
+const SelectProject = ({currentUrl, id}) => {
     const { project } = useSelector((state) => state.tasks);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const user = JSON.parse(localStorage.getItem('profile'));
+
+    // get current project from store
+
+
+    // must check if when loading page with invalid id it goes to default
+
+    // must check if loading page with valid id it selects that id
 
     useEffect(() => {
-        dispatch(setSelectedProject(currentId))
-    }, []);
+        // dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
+        dispatch(getProjectsList(user?.result, navigate)).then( ()=> dispatch(setSelectedProject(id, navigate)))
+        // dispatch(setSelectedProject(id, navigate))
+    }, [id]);
+  
+    // useEffect(() => {
+        // find a way to ensure the useEffect from above runs first or something
+    //   // navigate to that id
+    // }, [current project from store]);
 
     return <div className="dark:bg-zinc-800 transition duration-300 border dark:border-gray-500 dark:hover:border-gray-300  rounded-md overflow-hidden w-3/4 sm:max-w-md md:max-w-md lg:max-w-lg mx-auto mt-10 mb-5 shadow-md transition cursor-text">
         

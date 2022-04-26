@@ -90,7 +90,7 @@ export const createProject = async (req, res) => {
 };
 
 export const joinProject = async (req, res) => {
-  const { projectId, userEmail, userRole } = req.body;
+  const { projectId, userEmail } = req.body;
 
   const filter = { email: userEmail }
 
@@ -110,6 +110,25 @@ export const joinProject = async (req, res) => {
     const result = await UserModal.findOne(filter);
 
     res.status(201).json({ result });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+    
+    console.log(error);
+  }
+};
+
+export const getProjectList = async (req, res) => {
+  const { userEmail } = req.body;
+
+  const filter = { email: userEmail }
+
+  try {
+    const user = await UserModal.findOne(filter);
+
+    if (user) return res.status(400).json({ message: "User email does not exist" });
+
+    console.log({user})
+    res.status(201).json({ result: user });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
     

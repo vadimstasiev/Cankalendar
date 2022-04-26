@@ -186,27 +186,13 @@ const Kanban = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // get current project from store
 
-
-    // must check if when loading page with invalid id it goes to default
-
-    // must check if loading page with valid id it selects that id
-
-    useEffect(() => {
-      // dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
-      dispatch(setSelectedProject(id, navigate))
-    }, [id]);
-
-    // useEffect(() => {
-    //   // navigate to that id
-    // }, [current project from store]);
 
     return (
         <NoiseBackground>
             <Background className={"dark:bg-transparent min-h-screen"}>
             <Navbar/>
-            <SelectProject currentUrl="/Kanban" currentId={id}/>
+            <SelectProject currentUrl="/Kanban" id={id}/>
             {
               id?
                 <UncontrolledBoard id/>
