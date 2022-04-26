@@ -16,13 +16,6 @@ const SelectProjectDropdown = props => {
 
     const defaultProject = "Personal"
 
-    // get current project from store
-
-
-    // must check if when loading page with invalid id it goes to default
-
-    // must check if loading page with valid id it selects that id
-
     const getName = prjId => {
         return user.result.projects.owner.filter(prj => prjId===prj.id)[0]?.name || user.result.projects.guest.filter(prj => prjId===prj.id)[0]?.name
     }
@@ -33,9 +26,6 @@ const SelectProjectDropdown = props => {
 
     const onClickOption = (proj) => {
         navigate(`${currentUrl}/${proj.id}`)
-        // dispatch(setSelectedProject(proj.id, getName(proj.id), navigate))
-        // dispatch(setSelectedProject(pageId, getName(pageId), navigate))
-        // updateSelected()
     }
 
     useEffect(() => {
@@ -43,7 +33,7 @@ const SelectProjectDropdown = props => {
         dispatch(getProjectsList(user?.result, navigate)).then(()=>{
             console.log(getId("Personal"))
             if(!id) {
-                navigate(`${currentUrl}/${project.id}`)
+                onClickOption(project.id)
                 dispatch(setSelectedProject(getId(defaultProject), defaultProject, navigate))
             }
             if(!project.name) {
@@ -54,13 +44,6 @@ const SelectProjectDropdown = props => {
         })
         updateSelected()
     }, [id]);
-  
-    // useEffect(() => {
-    // //     find a way to ensure the useEffect from above runs first or something
-    // //   // navigate to that id
-    //     console.log(id)
-        
-    // }, []);
 
     if(!user) return <></>
 
