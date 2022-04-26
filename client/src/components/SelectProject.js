@@ -33,7 +33,7 @@ const SelectProjectDropdown = props => {
         dispatch(getProjectsList(user?.result, navigate)).then(()=>{
             console.log(getId("Personal"))
             if(!id) {
-                onClickOption(project.id)
+                onClickOption(project)
                 dispatch(setSelectedProject(getId(defaultProject), defaultProject, navigate))
             }
             if(!project.name) {
