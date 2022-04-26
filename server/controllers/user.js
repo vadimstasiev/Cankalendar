@@ -8,6 +8,8 @@ import Project from '../models/project.js';
 
 const secret = '9W2!8uAL[]sQD6pZ';
 
+const sessionExpiresIn = "3h"
+
 export const signin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -20,7 +22,7 @@ export const signin = async (req, res) => {
 
     if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
+    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: sessionExpiresIn });
 
     res.status(200).json({ result: oldUser, token });
   } catch (err) {
@@ -47,7 +49,7 @@ export const signup = async (req, res) => {
 
     const result = await UserModal.create({ email, password: hashedPassword, name, projects });
 
-    const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
+    const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: sessionExpiresIn } );
 
     res.status(201).json({ result, token });
   } catch (error) {
@@ -128,7 +130,7 @@ export const getProjectList = async (req, res) => {
 
     if (!user) return res.status(400).json({ message: "User email does not exist" });
 
-    
+
 
     console.log({user})
     res.status(201).json({ result: user });

@@ -12,7 +12,7 @@ export const setSelectedProject = (projectId, projectName, navigate=()=>{}) => a
 
     // select project
 
-    console.log("here", projectId)
+    // console.log("here", projectId)
   } catch (error) {
     console.log(error);
     if(error.response.status===401){
