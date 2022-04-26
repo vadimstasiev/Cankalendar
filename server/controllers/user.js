@@ -74,7 +74,7 @@ export const createProject = async (req, res) => {
 
     // add project to projects table
 
-    const existingProject = await Project.create(newProject);
+    Project.create({id: newProject.id, owner: userEmail});
 
 
     // return updated user object
@@ -127,6 +127,8 @@ export const getProjectList = async (req, res) => {
     const user = await UserModal.findOne(filter);
 
     if (!user) return res.status(400).json({ message: "User email does not exist" });
+
+    
 
     console.log({user})
     res.status(201).json({ result: user });

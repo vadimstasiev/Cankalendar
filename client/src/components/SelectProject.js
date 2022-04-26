@@ -22,11 +22,9 @@ const SelectProjectDropdown = props => {
     // must check if loading page with valid id it selects that id
 
     useEffect(() => {
-        // dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
         dispatch(getProjectsList(user?.result, navigate))
-        dispatch(setSelectedProject(id, "must retrieve name", navigate))
-        // dispatch(setSelectedProject(id, navigate))
-    }, []);
+        dispatch(setSelectedProject(id, user.result.projects.owner.filter(prj => id===prj.id)[0]?.name, navigate))
+    }, [id]);
   
     // useEffect(() => {
         // find a way to ensure the useEffect from above runs first or something
@@ -39,7 +37,6 @@ const SelectProjectDropdown = props => {
       <Menu>
             {({ open }) => (
               <>
-                {/* <Menu.Button className="w-full" onClick={()=>dispatch(getProjectsList(user?.result, navigate))}> */}
                 <Menu.Button className="w-full">
                   <div className={customClass}>{children}</div>
                 </Menu.Button>
