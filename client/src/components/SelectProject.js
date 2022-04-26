@@ -8,15 +8,30 @@ import { getProjectsList } from "../actions/auth";
 
 
 const SelectProjectDropdown = props => {
-    const { children, customClass, currentUrl } = props 
+    const { children, customClass, currentUrl, id } = props 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
 
+    // get current project from store
+
+
+    // must check if when loading page with invalid id it goes to default
+
+    // must check if loading page with valid id it selects that id
+
     useEffect(() => {
-        // dispatch(getProjectsList())
-    }, [user]);
+        // dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
+        dispatch(getProjectsList(user?.result, navigate))
+        dispatch(setSelectedProject(id, "must retrieve name", navigate))
+        // dispatch(setSelectedProject(id, navigate))
+    }, []);
+  
+    // useEffect(() => {
+        // find a way to ensure the useEffect from above runs first or something
+    //   // navigate to that id
+    // }, [current project from store]);
 
     if(!user) return <></>
 
@@ -24,6 +39,7 @@ const SelectProjectDropdown = props => {
       <Menu>
             {({ open }) => (
               <>
+                {/* <Menu.Button className="w-full" onClick={()=>dispatch(getProjectsList(user?.result, navigate))}> */}
                 <Menu.Button className="w-full">
                   <div className={customClass}>{children}</div>
                 </Menu.Button>
@@ -76,32 +92,11 @@ const SelectProjectDropdown = props => {
 
 const SelectProject = ({currentUrl, id}) => {
     const { project } = useSelector((state) => state.tasks);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    const user = JSON.parse(localStorage.getItem('profile'));
-
-    // get current project from store
-
-
-    // must check if when loading page with invalid id it goes to default
-
-    // must check if loading page with valid id it selects that id
-
-    useEffect(() => {
-        // dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
-        dispatch(getProjectsList(user?.result, navigate)).then( ()=> dispatch(setSelectedProject(id, navigate)))
-        // dispatch(setSelectedProject(id, navigate))
-    }, [id]);
-  
-    // useEffect(() => {
-        // find a way to ensure the useEffect from above runs first or something
-    //   // navigate to that id
-    // }, [current project from store]);
 
     return <div className="dark:bg-zinc-800 transition duration-300 border dark:border-gray-500 dark:hover:border-gray-300  rounded-md overflow-hidden w-3/4 sm:max-w-md md:max-w-md lg:max-w-lg mx-auto mt-10 mb-5 shadow-md transition cursor-text">
         
-            <SelectProjectDropdown currentUrl={currentUrl}>
+            <SelectProjectDropdown currentUrl={currentUrl} id={id}>
                 <div className="dark:bg-zinc-900 dark:text-white inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Selected: {project.name}
                 <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

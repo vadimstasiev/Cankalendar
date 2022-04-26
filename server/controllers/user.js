@@ -68,7 +68,7 @@ export const createProject = async (req, res) => {
     // add project to project.owner in user
     
     const user = await UserModal.findOne(filter);
-    if (user) return res.status(400).json({ message: "User email does not exist" });
+    if (!user) return res.status(400).json({ message: "User email does not exist" });
     
     await UserModal.findByIdAndUpdate(filter, {projects: {...user.projects, owner: [...user.projects.owner, newProject]}});
 
@@ -101,7 +101,7 @@ export const joinProject = async (req, res) => {
 
     const user = await UserModal.findOne(filter);
 
-    if (user) return res.status(400).json({ message: "User email does not exist" });
+    if (!user) return res.status(400).json({ message: "User email does not exist" });
 
     await UserModal.findByIdAndUpdate(filter, {projects: {...user.projects, guest: [...user.projects.guest, projectId]}});
 
@@ -120,12 +120,13 @@ export const joinProject = async (req, res) => {
 export const getProjectList = async (req, res) => {
   const { userEmail } = req.body;
 
+  console.log(userEmail)
   const filter = { email: userEmail }
 
   try {
     const user = await UserModal.findOne(filter);
 
-    if (user) return res.status(400).json({ message: "User email does not exist" });
+    if (!user) return res.status(400).json({ message: "User email does not exist" });
 
     console.log({user})
     res.status(201).json({ result: user });
