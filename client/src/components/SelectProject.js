@@ -10,39 +10,48 @@ import { getprojectslist } from "../actions/auth";
 const SelectProjectDropdown = props => {
     const { children, customClass, currentUrl, id, updateSelected } = props 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-    const { project } = useSelector((state) => state.tasks);
+    const { selectedProject } = useSelector((state) => state.tasks);
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
     const defaultProject = "Personal"
 
+    // get name from the local storage list
     const getName = prjId => {
         return user.result.projects.owner.filter(prj => prjId===prj.id)[0]?.name || user.result.projects.guest.filter(prj => prjId===prj.id)[0]?.name
     }
 
+    // get id from the local storage list, id for guest projects must be requested
     const getId = prjName => {
         return user.result.projects.owner.filter(prj => prjName===prj.name)[0]?.id || user.result.projects.guest.filter(prj => prjName===prj.name)[0]?.id
     }
 
-    const onClickOption = (proj) => {
+    const onSelectOption = (proj) => {
         navigate(`${currentUrl}/${proj.id}`)
     }
 
     useEffect(() => {
-        
-        dispatch(getprojectslist(user?.result, navigate)).then(()=>{
-            console.log(getId("Personal"))
-            if(!id) {
-                onClickOption(project)
-                dispatch(setSelectedProject(getId(defaultProject), defaultProject, navigate))
+        const defaultProjectId = getId(defaultProject)
+        dispatch(getprojectslist(user?.result, navigate)).then(async ()=>{
+            if(user.result.projects.owner){
+                if(getName(id)){
+                    console.log(getName(id))
+                    await dispatch(setSelectedProject(id, getName(id), navigate))
+                } else {
+                    console.log("id not present")
+                    await dispatch(setSelectedProject(defaultProjectId, defaultProject, navigate))
+                    navigate(`${currentUrl}/${defaultProjectId}`)
+                } 
             }
-            if(!project.name) {
-                dispatch(setSelectedProject(getId(defaultProject), defaultProject, navigate))
-            } else {
-                dispatch(setSelectedProject(id, getName(id), navigate))
-            }
+            // if(!id || !getName(id)) {
+            //     console.log("id not present or project doesnt have a name")
+            //     await dispatch(setSelectedProject(defaultProjectId, defaultProject, navigate))
+            //     navigate(`${currentUrl}/${defaultProjectId}`)
+            // } else {
+            //     await dispatch(setSelectedProject(id, getName(id), navigate))
+            // }
+            updateSelected()
         })
-        updateSelected()
     }, [id]);
 
     if(!user) return <></>
@@ -80,7 +89,7 @@ const SelectProjectDropdown = props => {
                                             ? "bg-zinc-100 dark:bg-zinc-600 text-zinc-900 dark:text-zinc-200"
                                             : "text-zinc-700 dark:text-zinc-100"
                                         } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                                        onClick={()=>onClickOption(proj)}
+                                        onClick={()=>onSelectOption(proj)}
                                         >
                                         {proj.name}
                                         </div>
@@ -102,7 +111,7 @@ const SelectProjectDropdown = props => {
   }
 
 const SelectProject = ({currentUrl, id}) => {
-    const { project } = useSelector((state) => state.tasks);
+    const { selectedProject } = useSelector((state) => state.tasks);
 
     const [, updateState] = useState();
     const forceUpdate = useCallback(() => updateState({}), []);
@@ -115,7 +124,7 @@ const SelectProject = ({currentUrl, id}) => {
         
             <SelectProjectDropdown currentUrl={currentUrl} id={id} updateSelected={updateSelected}>
                 <div className="dark:bg-zinc-900 dark:text-white inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                Selected: { project.name }
+                Selected: { selectedProject.name } {console.log(selectedProject)}
                 <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
