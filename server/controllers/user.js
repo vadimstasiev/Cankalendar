@@ -61,7 +61,7 @@ export const signup = async (req, res) => {
 
 export const createProject = async (req, res) => {
   const { userEmail, projectName } = req.body;
-  const newProject = { id: uuid(), name: projectName }
+  const newProject = { name: projectName, id: uuid() }
 
   const filter = { email: userEmail }
 
@@ -72,9 +72,9 @@ export const createProject = async (req, res) => {
     const user = await UserModal.findOne(filter);
     if (!user) return res.status(400).json({ message: "User email does not exist" });
     
-    await UserModal.findByIdAndUpdate(filter, {projects: {...user.projects, owner: [...user.projects.owner, newProject]}});
+    await UserModal.findOneAndUpdate(filter, {projects: {...user.projects, owner: [...user.projects.owner, newProject]}});
 
-    // add project to projects table
+    // // add project to projects table
 
     Project.create({id: newProject.id, owner: userEmail});
 
@@ -105,7 +105,14 @@ export const joinProject = async (req, res) => {
 
     if (!user) return res.status(400).json({ message: "User email does not exist" });
 
-    await UserModal.findByIdAndUpdate(filter, {projects: {...user.projects, guest: [...user.projects.guest, projectId]}});
+    //check if user owns it
+    if (user.projects.owner.filter(prj=> projectId === prj.id).length>0) return res.status(400).json({ message: "User is owner of the project" });
+
+    //check if user already in it
+
+    if (user.projects.guest.filter(id=> projectId === id).length>0) return res.status(400).json({ message: "User has already joined this project" });
+
+    await UserModal.findOneAndUpdate(filter, {projects: {...user.projects, guest: [...user.projects.guest, projectId]}});
 
     // return updated user object
     
@@ -122,7 +129,6 @@ export const joinProject = async (req, res) => {
 export const getProjectList = async (req, res) => {
   const { userEmail } = req.body;
 
-  console.log(userEmail)
   const filter = { email: userEmail }
 
   try {
@@ -130,9 +136,9 @@ export const getProjectList = async (req, res) => {
 
     if (!user) return res.status(400).json({ message: "User email does not exist" });
 
+    // must get the list of projects in which user is guest
 
 
-    console.log({user})
     res.status(201).json({ result: user });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });

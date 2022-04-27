@@ -32,8 +32,9 @@ export const signout = () => dispatch => new Promise( async (resolve, reject) =>
 
 export const createproject = (formData, navigate) => dispatch => new Promise( async (resolve, reject) => {
   try {
-    const { data } = await api.createProject({userEmail: formData.email, projectName: formData.projectName});
+    const { data } = await api.createProject(formData);
     dispatch({ type: UPDATE_PROJECTS, data });
+    navigate("/")
     resolve()
   } catch (error) {
     console.log(error);
@@ -47,8 +48,9 @@ export const createproject = (formData, navigate) => dispatch => new Promise( as
 
 export const joinproject = (formData, navigate) => dispatch => new Promise( async (resolve, reject) => {
   try {
-    const { data } = await api.joinProject({projectId: formData.id, userEmail: formData.email, userRole: formData.role});
+    const { data } = await api.joinProject(formData);
     dispatch({ type: UPDATE_PROJECTS, data });
+    navigate("/")
     resolve()
   } catch (error) {
     console.log(error);
@@ -60,7 +62,7 @@ export const joinproject = (formData, navigate) => dispatch => new Promise( asyn
 }
 )
 
-export const getProjectsList = (formData, navigate) => dispatch => new Promise( async (resolve, reject) => {
+export const getprojectslist = (formData, navigate) => dispatch => new Promise( async (resolve, reject) => {
   try {
     const { data } = await api.getProjectsList({userEmail: formData.email});
     dispatch({ type: UPDATE_PROJECTS, data });

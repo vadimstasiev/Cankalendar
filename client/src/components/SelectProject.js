@@ -4,7 +4,7 @@ import { Popover, Transition, Menu } from '@headlessui/react'
 import { AppstoreAddOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { setSelectedProject } from "../actions/tasks";
-import { getProjectsList } from "../actions/auth";
+import { getprojectslist } from "../actions/auth";
 
 
 const SelectProjectDropdown = props => {
@@ -30,7 +30,7 @@ const SelectProjectDropdown = props => {
 
     useEffect(() => {
         
-        dispatch(getProjectsList(user?.result, navigate)).then(()=>{
+        dispatch(getprojectslist(user?.result, navigate)).then(()=>{
             console.log(getId("Personal"))
             if(!id) {
                 onClickOption(project)

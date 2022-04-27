@@ -6,8 +6,8 @@ import { createProject, getProjectList, joinProject, signin, signup } from "../c
 
 router.post("/signin", signin);
 router.post("/signup", signup);
-router.post("/createProject", auth, createProject);
 router.post("/joinProject", auth, joinProject);
+router.post("/createProject", auth, createProject);
 router.post("/getProjectList", auth, getProjectList);
 
 export default router;

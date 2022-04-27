@@ -24,7 +24,7 @@ const TicketsList = () => {
   }, [section]);
 
 
-  //renders the todo array, returns loading if todo hasn't loaded yet
+  //renders the array, returns loading if todo hasn't loaded yet
   return tasks.length === 0 || undefined || null ? (
     // <div className=" fixed top-0 left-0 right-0 bottom-0 w-full h-screen overflow-hidden bg-white dark:bg-zinc-500 opacity-50 flex flex-col items-center justify-center">
     <div className=" fixed top-0 left-0 right-0 bottom-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
