@@ -136,7 +136,7 @@ export const getProjectList = async (req, res) => {
 
     if (!user) return res.status(400).json({ message: "User email does not exist" });
 
-    // must get the list of projects in which user is guest
+    // must get the list of projects in which user is guest TODO
 
 
     res.status(201).json({ result: user });

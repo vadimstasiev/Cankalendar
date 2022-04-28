@@ -68,30 +68,59 @@ const SelectProjectDropdown = props => {
                       static
                       className="mt-2 origin-top-right w-full rounded-md shadow-lg outline-none"
                     >
-                      {
-                        user.result.projects?
-                            user.result.projects.owner.map(proj => (
-                                <div className="py-1" key={proj.id}>
-                                    <Menu.Item>
-                                    {({ active }) => (
-                                        <div
-                                        className={`cursor-pointer ${
-                                            active
-                                            ? "bg-zinc-100 dark:bg-zinc-600 text-zinc-900 dark:text-zinc-200"
-                                            : "text-zinc-700 dark:text-zinc-100"
-                                        } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                                        onClick={()=>onClickOption(proj)}
-                                        >
-                                        {proj.name}
-                                        </div>
-                                    )}
-                                    </Menu.Item>
-                                </div>
-                            ))
-                        :
-                            null
-                      }
-                      
+                        {user.result.projects.owner.length>0?
+                            <div className="bg-zinc-100 dark:bg-zinc-600 text-zinc-900 dark:text-zinc-200 pl-2">Your Projects</div>
+                        :null}
+                        {
+                            user.result.projects?
+                                user.result.projects.owner.map(proj => (
+                                    <div className="py-1" key={proj.id}>
+                                        <Menu.Item>
+                                        {({ active }) => (
+                                            <div
+                                            className={`cursor-pointer ${
+                                                active
+                                                ? "bg-zinc-100 dark:bg-zinc-600 text-zinc-900 dark:text-zinc-200"
+                                                : "text-zinc-700 dark:text-zinc-100"
+                                            } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
+                                            onClick={()=>onClickOption(proj)}
+                                            >
+                                            {proj.name}
+                                            </div>
+                                        )}
+                                        </Menu.Item>
+                                    </div>
+                                ))
+                            :
+                                null
+                        }
+                        {user.result.projects.guest.length>0?
+                            <div className="bg-zinc-100 dark:bg-zinc-600 text-zinc-900 dark:text-zinc-200 pl-2">Joined Projects</div>
+                        :null}
+                        
+                        {
+                            user.result.projects?
+                                user.result.projects.guest.map(projId => (
+                                    <div className="py-1" key={projId}>
+                                        <Menu.Item>
+                                        {({ active }) => (
+                                            <div
+                                            className={`cursor-pointer ${
+                                                active
+                                                ? "bg-zinc-100 dark:bg-zinc-600 text-zinc-900 dark:text-zinc-200"
+                                                : "text-zinc-700 dark:text-zinc-100"
+                                            } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
+                                            onClick={()=>onClickOption({id: projId})}
+                                            >
+                                            {projId.name || projId}
+                                            </div>
+                                        )}
+                                        </Menu.Item>
+                                    </div>
+                                ))
+                            :
+                                null
+                        }
                     </Menu.Items>
                   </div>
                 </Transition>

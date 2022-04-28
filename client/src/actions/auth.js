@@ -33,8 +33,8 @@ export const signout = () => dispatch => new Promise( async (resolve, reject) =>
 export const createproject = (formData, navigate) => dispatch => new Promise( async (resolve, reject) => {
   try {
     const { data } = await api.createProject(formData);
-    dispatch({ type: UPDATE_PROJECTS, data });
-    navigate("/")
+    await dispatch({ type: UPDATE_PROJECTS, data });
+    navigate(`/`)
     resolve()
   } catch (error) {
     console.log(error);
@@ -50,7 +50,7 @@ export const joinproject = (formData, navigate) => dispatch => new Promise( asyn
   try {
     const { data } = await api.joinProject(formData);
     dispatch({ type: UPDATE_PROJECTS, data });
-    navigate("/")
+    navigate(`/Kanban/${formData.projectId}`)
     resolve()
   } catch (error) {
     console.log(error);
