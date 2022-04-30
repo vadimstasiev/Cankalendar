@@ -68,7 +68,7 @@ export const getprojectslist = (formData, navigate) => dispatch => new Promise( 
     dispatch({ type: UPDATE_PROJECTS, data });
     resolve()
   } catch (error) {
-    console.log(error);
+    console.log(error.response?.data?.message);
     if(error.response.status===401){
       dispatch(signout()).then(()=>navigate("/SignIn"))
     }

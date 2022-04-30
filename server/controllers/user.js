@@ -44,7 +44,7 @@ export const signup = async (req, res) => {
 
     const projects = {
       owner: [{name: "Personal" , id: personProjectUUID}], 
-      guest: [], // [...ids]
+      guest: [], 
     }
 
     const result = await UserModal.create({ email, password: hashedPassword, name, projects });
@@ -110,7 +110,7 @@ export const joinProject = async (req, res) => {
 
     //check if user already in it
 
-    if (user.projects.guest.filter(id=> projectId === id).length>0) return res.status(400).json({ message: "User has already joined this project" });
+    if (user.projects.guest.filter(prj=> projectId === prj.id).length>0) return res.status(400).json({ message: "User has already joined this project" });
 
     await UserModal.findOneAndUpdate(filter, {projects: {...user.projects, guest: [...user.projects.guest, projectId]}});
 
@@ -137,9 +137,26 @@ export const getProjectList = async (req, res) => {
     if (!user) return res.status(400).json({ message: "User email does not exist" });
 
     // must get the list of projects in which user is guest TODO
+    
+    const guestListWithNames = await Promise.all(user.projects.guest.map(async proj => {
+      //// find id in projects 
+      const projectInfo = await Project.findOne({ id: proj.id })
+      //// get owner
+      const owner = await UserModal.findOne({email: projectInfo.owner});
+      //// find project name from owners projects
+      const projectName = owner.projects.owner.filter(project => project.id === proj.id)[0].name
+      return {id: proj.id, name: projectName}
+    }))
 
 
-    res.status(201).json({ result: user });
+
+    // res.status(201).json({ result: user });
+    // console.log("user", {...user, projects: {...user.projects, guest: guestListWithNames}})
+    await UserModal.findOneAndUpdate(filter, {projects: {...user.projects, guest: guestListWithNames}});
+    
+    const result = await UserModal.findOne(filter);
+
+    res.status(201).json({ result });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
     

@@ -35,10 +35,9 @@ const SelectProjectDropdown = props => {
     }
 
     useEffect(() => {
-        console.log(selectedProject)
+        console.log("user?.result", user?.result)
         dispatch(getprojectslist(user?.result, navigate)).then(async()=>{
             // if selectedProject doesn't exist (page was refreshed or new)
-            console.log("selected name", selectedProject.name)
             if(!selectedProject.name) {
                 // if page has id in url
                 if(id) {
@@ -115,8 +114,8 @@ const SelectProjectDropdown = props => {
                         
                         {
                             user.result.projects?
-                                user.result.projects.guest.map(projId => (
-                                    <div className="py-1" key={projId}>
+                                user.result.projects.guest.map(proj => (
+                                    <div className="py-1" key={proj.id}>
                                         <Menu.Item>
                                         {({ active }) => (
                                             <div
@@ -125,9 +124,9 @@ const SelectProjectDropdown = props => {
                                                 ? "bg-zinc-100 dark:bg-zinc-600 text-zinc-900 dark:text-zinc-200"
                                                 : "text-zinc-700 dark:text-zinc-100"
                                             } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                                            onClick={()=>navigateOption({id: projId})}
+                                            onClick={()=>navigateOption({id: proj.id})}
                                             >
-                                            {projId}
+                                            {proj.name}
                                             </div>
                                         )}
                                         </Menu.Item>
