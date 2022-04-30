@@ -22,6 +22,7 @@ const SelectProjectDropdown = props => {
     }
 
     const getId = prjName => {
+        // guest projects still not set up properly, TODO
         return user.result.projects.owner.filter(prj => prjName===prj.name)[0]?.id || user.result.projects.guest.filter(prj => prjName===prj.name)[0]?.id
     }
 
@@ -34,7 +35,7 @@ const SelectProjectDropdown = props => {
         dispatch(getprojectslist(user?.result, navigate)).then(async()=>{
             // if selectedProject doesn't exist (page was refreshed or new)
             if(!selectedProject.name) {
-                // if page has id
+                // if page has id in url
                 if(id) {
                     await dispatch(setSelectedProject(id, getName(id), navigate))
                     navigateOption({id: id})
