@@ -164,26 +164,11 @@ const UncontrolledBoard = ({id}) => {
   );
 }
 
-// const App = () => {
-//   return (
-//     <>
-//       <h4>Example of an uncontrolled board</h4>
-//       <UncontrolledBoard />
-//       <h4>Example of a controlled board</h4>
-//       <p>Just the card moving is implemented in this demo.</p>
-//       <p>
-//         In this kind of board, you can do whatever you want. We just mirror your
-//         board state.
-//       </p>
-//       <ControlledBoard />
-//     </>
-//   );
-// }
-
-
 
 const Kanban = () => {
     const { id } = useParams();
+    const { selectedProject } = useSelector((state) => state.tasks);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -194,7 +179,7 @@ const Kanban = () => {
             <Navbar/>
             <SelectProject currentUrl="/Kanban" id={id}/>
             {
-              id?
+              selectedProject?
                 <UncontrolledBoard id/>
               :null
             }

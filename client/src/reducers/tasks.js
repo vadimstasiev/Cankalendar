@@ -32,6 +32,7 @@ export default (state = { isLoading: true, tasks: [], selectedProject: {} }, act
     case DELETE:
       return { ...state, tasks: state.tasks.filter((task) => task._id !== action.payload) };
     case SET_SELECTED_PROJECT:
+      localStorage.setItem('selectedProject', JSON.stringify({ ...action?.payload }));
       return { ...state, selectedProject: action.payload }
     default:
       return state;
