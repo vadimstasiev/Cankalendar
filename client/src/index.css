@@ -161,4 +161,13 @@
         cursor: pointer;
       }
     }
+
+    /* Calendar */
+
+
+    abbr[title] {
+      text-decoration: none;
+    }
+
+     
  }
