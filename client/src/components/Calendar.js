@@ -36,7 +36,8 @@ const CalendarPage = () => {
           <Calendar 
           className="bg-zinc-100 shadow-md border-2 dark:bg-zinc-800 dark:text-white mx-10 p-5 rounded-xl" 
           tileClassName="h-20 pb-20 bg-white hover:dark:bg-zinc-700  text-left align-text-top shadow-sm border-2  pl-2 pt-2 dark:bg-zinc-600 dark:border-stone-800 place-content-center justify-center"
-          // tileContent={<Button className="hover:bg-zinc-900">Hello</Button>}
+          // tileContent={(e)=><div className="hover:bg-zinc-900">Hello {console.log("e", e)}</div>}
+          // TODO make api requests to render data relevant inside tiles "e" holds data information for the given tile  
           nextLabel={<Label text="Next"/>}
           next2Label={""}
           prevLabel={<Label text="Previous"/>}
