@@ -10,6 +10,7 @@ import SignOut from './components/Auth/SignOut';
 import Tickets from './components/Tickets/Tickets';
 import Kanban from './components/Kanban/Kanban';
 import PrivateRoute from './components/PrivateRoute';
+import Calendar from './components/Calendar';
 
 const AppRouter = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -29,6 +30,10 @@ const AppRouter = () => {
             <Route path='/Kanban' element={<PrivateRoute from="/Kanban"/>}>
               <Route path="/Kanban" exact element={<Kanban/>} />
               <Route path="/Kanban/:id" exact element={<Kanban/>} />
+            </Route>
+            <Route path='/Calendar' element={<PrivateRoute from="/Calendar"/>}>
+              <Route path="/Calendar" exact element={<Calendar/>} />
+              <Route path="/Calendar/:id" exact element={<Calendar/>} />
             </Route>
             <Route path='/CreateProject' element={<PrivateRoute from="/CreateProject"/>}>
               <Route path="/CreateProject" exact element={<CreateNewProject/>} />
