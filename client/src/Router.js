@@ -30,8 +30,8 @@ const AppRouter = () => {
               <Route path="/Kanban" exact element={<Kanban/>} />
               <Route path="/Kanban/:id" exact element={<Kanban/>} />
             </Route>
-            <Route path='/CreateNewProject' element={<PrivateRoute from="/CreateNewProject"/>}>
-              <Route path="/CreateNewProject" exact element={<CreateNewProject/>} />
+            <Route path='/CreateProject' element={<PrivateRoute from="/CreateProject"/>}>
+              <Route path="/CreateProject" exact element={<CreateNewProject/>} />
             </Route>   
             <Route path='/JoinProject' element={<PrivateRoute from="/JoinProject"/>}>
               <Route path="/JoinProject" exact element={<JoinProject/>} />

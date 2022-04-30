@@ -38,7 +38,7 @@ const SelectProjectDropdown = props => {
         console.log("user?.result", user?.result)
         dispatch(getprojectslist(user?.result, navigate)).then(async()=>{
             // if selectedProject doesn't exist (page was refreshed or new)
-            if(!selectedProject.name) {
+            if(!selectedProject?.name) {
                 // if page has id in url
                 if(id) {
                     console.log("page has id in url")

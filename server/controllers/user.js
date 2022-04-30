@@ -112,7 +112,10 @@ export const joinProject = async (req, res) => {
 
     if (user.projects.guest.filter(prj=> projectId === prj.id).length>0) return res.status(400).json({ message: "User has already joined this project" });
 
-    await UserModal.findOneAndUpdate(filter, {projects: {...user.projects, guest: [...user.projects.guest, projectId]}});
+
+    const projectName = getProjectNameFromId(projectId)
+
+    await UserModal.findOneAndUpdate(filter, {projects: {...user.projects, guest: [...user.projects.guest, {id: projectId, name: projectName}]}});
 
     // return updated user object
     
@@ -139,12 +142,8 @@ export const getProjectList = async (req, res) => {
     // must get the list of projects in which user is guest TODO
     
     const guestListWithNames = await Promise.all(user.projects.guest.map(async proj => {
-      //// find id in projects 
-      const projectInfo = await Project.findOne({ id: proj.id })
       //// get owner
-      const owner = await UserModal.findOne({email: projectInfo.owner});
-      //// find project name from owners projects
-      const projectName = owner.projects.owner.filter(project => project.id === proj.id)[0].name
+      const projectName = await getProjectNameFromId(proj.id)
       return {id: proj.id, name: projectName}
     }))
 
@@ -163,3 +162,12 @@ export const getProjectList = async (req, res) => {
     console.log(error);
   }
 };
+
+const getProjectNameFromId = async (projectId) => {
+  //// find id in projects 
+  const projectInfo = await Project.findOne({ id: projectId })
+  //// get owner
+  const owner = await UserModal.findOne({email: projectInfo.owner});
+  //// find project name from owners projects
+  return owner.projects.owner.filter(project => project.id === projectId)[0].name
+}

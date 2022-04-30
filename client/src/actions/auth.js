@@ -49,7 +49,7 @@ export const createproject = (formData, navigate) => dispatch => new Promise( as
 export const joinproject = (formData, navigate) => dispatch => new Promise( async (resolve, reject) => {
   try {
     const { data } = await api.joinProject(formData);
-    dispatch({ type: UPDATE_PROJECTS, data });
+    await dispatch({ type: UPDATE_PROJECTS, data });
     navigate(`/Kanban/${formData.projectId}`)
     resolve()
   } catch (error) {
