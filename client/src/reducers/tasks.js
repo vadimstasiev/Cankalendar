@@ -1,6 +1,6 @@
 import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_BY_SEARCH, FETCH_BY_CREATOR, FETCH_SINGLE, CREATE, UPDATE, DELETE, SET_SELECTED_PROJECT } from '../constants/actionTypes';
 
-export default (state = { isLoading: true, tasks: [], project: {id: "0", name: "Personal"} }, action) => {
+export default (state = { isLoading: true, tasks: [], selectedProject: {} }, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };
@@ -32,7 +32,7 @@ export default (state = { isLoading: true, tasks: [], project: {id: "0", name: "
     case DELETE:
       return { ...state, tasks: state.tasks.filter((task) => task._id !== action.payload) };
     case SET_SELECTED_PROJECT:
-      return { ...state, project: action.payload }
+      return { ...state, selectedProject: action.payload }
     default:
       return state;
   }
