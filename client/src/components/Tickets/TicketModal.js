@@ -70,6 +70,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
     if(task){
       setModalTitle(task.title)
       setModalMessage(task.message)
+      setIsDue(!(task.dueDate === task.createdAt))
     }
   }, [task]);
 
@@ -124,7 +125,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                       onChange={handleBodyChange}
                       style={{ resize: "none" }}
                     />
-                    <div className='bg-zinc-200 dark:bg-zinc-700 rounded-xl m-auto w-20 py-1'>
+                    <div className=' dark:bg-zinc-700 rounded-xl dark:m-auto w-20 py-1'>
                       <div className='m-auto inline pl-1'>
                         <input
                           className='ml-2'
@@ -143,7 +144,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                         <Calendar 
                           className="bg-zinc-100 m-2 p-2 mb-6 shadow-md border-2 dark:bg-zinc-800 dark:text-white rounded-xl" 
                           tileClassName="pl-2 bg-white hover:bg-zinc-300 hover:dark:bg-zinc-700  text-left align-text-top shadow-sm border-2  dark:bg-zinc-600 dark:border-stone-800 place-content-center justify-center"
-                          tileContent={(e)=><div className="hover:bg-zinc-900"> {console.log("e", e)}</div>}
+                          tileContent={(e)=><div className="hover:bg-zinc-900"> {console.log("e")}</div>}
                           // TODO make api requests to render data relevant inside tiles "e" holds data information for the given tile  
                           nextLabel={<Label text="Next"/>}
                           next2Label={""}
