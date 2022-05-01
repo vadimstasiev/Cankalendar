@@ -22,7 +22,9 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
   const [isDue, setIsDue] = useState(false);
-  const [dueDate, setDueDate] = useState("");
+  const [dueDate, setDueDate] = useState();
+
+  const [calendarDate, setCalendarDate] = useState();
 
   const modalRef = useRef();
 
@@ -71,6 +73,8 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
       setModalTitle(task.title)
       setModalMessage(task.message)
       setIsDue(!(task.dueDate === task.createdAt))
+      const date = new Date(task.dueDate)
+      setDueDate(date)
     }
   }, [task]);
 
@@ -88,6 +92,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
       document.removeEventListener("keydown", escFunction, false);
     };
   }, []);
+
 
   return (
     <div>
@@ -144,13 +149,19 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                         <Calendar 
                           className="bg-zinc-100 m-2 p-2 mb-6 shadow-md border-2 dark:bg-zinc-800 dark:text-white rounded-xl" 
                           tileClassName="pl-2 bg-white hover:bg-zinc-300 hover:dark:bg-zinc-700  text-left align-text-top shadow-sm border-2  dark:bg-zinc-600 dark:border-stone-800 place-content-center justify-center"
-                          tileContent={(e)=><div className="hover:bg-zinc-900"> {console.log("e")}</div>}
+                          tileContent={(e)=><div className="hover:bg-zinc-400 dark:hover:bg-zinc-900 inline-table float-right p-1"> {
+                            e.date.setHours(0,0,0,0)===dueDate.setHours(0,0,0,0)?
+                              <div className='rounded-xl bg-red-700 py-2 px-2'></div> 
+                            :null
+                          }</div>}
                           // TODO make api requests to render data relevant inside tiles "e" holds data information for the given tile  
                           nextLabel={<Label text="Next"/>}
                           next2Label={""}
                           prevLabel={<Label text="Previous"/>}
                           prev2Label={""}
-                          // onChange={setDate} value={date} 
+                          // activeStartDate={dueDate}
+                          onChange={e=>console.log(e)}
+                          value={calendarDate} 
                         />
                         :null
                     }
