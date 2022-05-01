@@ -1,14 +1,15 @@
 import express from 'express';
 
-import { getTasks, getTasksBySearch, getTasksByCreator, getTask, createTask, updateTask, deleteTask } from '../controllers/tasks.js';
+import { getTasks, getTasksBySearch, getTasksByCreator, getTasksByProjectId, getTask, createTask, updateTask, deleteTask } from '../controllers/tasks.js';
 
 const router = express.Router();
 import auth from "../middleware/auth.js";
 
-router.get('/creator', getTasksByCreator);
-router.get('/search', getTasksBySearch);
-router.get('/', getTasks);
-router.get('/:id', getTask);
+router.get('/creator', auth, getTasksByCreator);
+router.get('/search', auth, getTasksBySearch);
+router.get('/byid', auth, getTasksByProjectId);
+router.get('/', auth, getTasks);
+router.get('/:id', auth, getTask);
 
 router.post('/', auth,  createTask);
 router.patch('/:id', auth, updateTask);

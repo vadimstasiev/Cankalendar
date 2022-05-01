@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_SINGLE, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, FETCH_BY_CREATOR, LOGOUT, SET_SELECTED_PROJECT } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_SINGLE, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, FETCH_BY_CREATOR, LOGOUT, SET_SELECTED_PROJECT, CLEAR } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 import {signout} from './auth'
 
@@ -35,10 +35,10 @@ export const getTask = (id, navigate=()=>{}) => async (dispatch) => {
   }
 };
 
-export const getTasks = (page, navigate=()=>{}) => async (dispatch) => {
+export const getTasks = (page, projectId, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data: { data, currentPage, numberOfPages } } = await api.fetchTasks(page);
+    const { data: { data, currentPage, numberOfPages } } = await api.fetchTasks(page, projectId);
 
     dispatch({ type: FETCH_PAGE, payload: { data, currentPage, numberOfPages } });
     dispatch({ type: END_LOADING });
@@ -50,10 +50,10 @@ export const getTasks = (page, navigate=()=>{}) => async (dispatch) => {
   }
 };
 
-export const getTasksCumulative = (page, navigate=()=>{}) => async (dispatch) => {
+export const getTasksCumulative = (page, projectId, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data: { data, currentPage, numberOfPages } } = await api.fetchTasks(page);
+    const { data: { data, currentPage, numberOfPages } } = await api.fetchTasks(page, projectId);
 
     dispatch({ type: FETCH_PAGE_CUMULATIVE, payload: { data, currentPage, numberOfPages } });
     dispatch({ type: END_LOADING });
@@ -87,6 +87,17 @@ export const getTasksBySearch = (searchQuery, navigate=()=>{}) => async (dispatc
 
     dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
     dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
+  }
+};
+
+export const clearTasks = (navigate=()=>{}) => async (dispatch) => {
+  try {
+    dispatch({ type: CLEAR });
   } catch (error) {
     console.log(error);
     if(error.response.status===401){

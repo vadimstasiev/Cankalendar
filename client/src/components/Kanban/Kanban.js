@@ -132,6 +132,7 @@ const ControlledBoard = () => {
 const UncontrolledBoard = ({id}) => {
   const dispatch = useDispatch()
   const { tasks, isLoading } = useSelector((state) => state.tasks);
+  const selectedProject = JSON.parse(localStorage.getItem('selectedProject'));
   const [section, setSection] = useState(1);
 
   const getCurrentVisibleSection = () => {
@@ -140,9 +141,9 @@ const UncontrolledBoard = ({id}) => {
 
   useEffect(() => {
     if(section===1){
-      dispatch(getTasks(1))
+      dispatch(getTasks(1, selectedProject.id))
     } else {
-      dispatch(getTasksCumulative(section))
+      dispatch(getTasksCumulative(section, selectedProject.id))
     }
   }, [section]);
   return (
@@ -154,7 +155,7 @@ const UncontrolledBoard = ({id}) => {
       onCardRemove={console.log}
       onLaneRename={console.log}
       initialBoard={board}
-      allowAddCard={{ on: "top" }}
+      // allowAddCard={{ on: "top" }}
       onNewCardConfirm={draftCard => ({
         id: new Date().getTime(),
         ...draftCard

@@ -8,7 +8,7 @@ const TicketCreateInput = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [showInput, setShowInput] = useState(false);
 
-  const { tasks, isLoading } = useSelector((state) => state.tasks);
+  const { tasks, isLoading, selectedProject } = useSelector((state) => state.tasks);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const TicketCreateInput = () => {
 
     const user = JSON.parse(localStorage.getItem('profile'));
 
-    dispatch(createTask({ title: inputTitle, message: inputMessage, creator: user?.result?.email }, navigate));
+    dispatch(createTask({ title: inputTitle, message: inputMessage, creator: user?.result?.email, projectId: selectedProject.id }, navigate));
 
     setInputMessage("");
     setInputTitle("");

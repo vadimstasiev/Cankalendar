@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTasks, getTasksCumulative } from "../../actions/tasks";
+import { clearTasks, getTasks, getTasksCumulative } from "../../actions/tasks";
 import Ticket from "./Ticket";
 import { useEffect } from "react";
 import OnScreenRender from "./OnScreenRender";
+import { useNavigate } from "react-router-dom";
 
 
 const TicketsList = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { tasks, isLoading } = useSelector((state) => state.tasks);
+  const selectedProject = JSON.parse(localStorage.getItem('selectedProject'));
+  const [currentProject, setCurrentProject] = useState("");
+
   const [section, setSection] = useState(1);
 
   const getCurrentVisibleSection = () => {
@@ -17,11 +22,20 @@ const TicketsList = () => {
 
   useEffect(() => {
     if(section===1){
-      dispatch(getTasks(1))
+      dispatch(getTasks(1, selectedProject.id))
     } else {
-      dispatch(getTasksCumulative(section))
+      dispatch(getTasksCumulative(section, selectedProject.id))
     }
   }, [section]);
+
+  useEffect(() => {
+    if(selectedProject.id!==currentProject && !selectedProject.id){
+      setCurrentProject(selectedProject.id)
+    } else {
+      dispatch(clearTasks(navigate))
+      setSection(1)
+    }
+  }, [selectedProject.id]);
 
 
   //renders the array, returns loading if todo hasn't loaded yet

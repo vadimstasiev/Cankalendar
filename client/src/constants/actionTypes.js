@@ -1,6 +1,7 @@
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
 export const DELETE = 'DELETE';
+export const CLEAR = 'CLEAR';
 export const FETCH_PAGE = 'FETCH_PAGE';
 export const FETCH_PAGE_CUMULATIVE = 'FETCH_PAGE_CUMULATIVE';
 export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
