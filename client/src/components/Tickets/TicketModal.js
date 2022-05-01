@@ -22,9 +22,9 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
   const [isDue, setIsDue] = useState(false);
+  const [createdAtDate, setCreatedAtDate] = useState();
   const [dueDate, setDueDate] = useState();
 
-  const [calendarDate, setCalendarDate] = useState();
 
   const modalRef = useRef();
 
@@ -37,7 +37,14 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
 
   //updates todo when changes are made in modal
   const updateTodo = () => {
-    dispatch(updateTask(id, {...task, title:modalTitle, message:modalMessage}))
+    dispatch(updateTask(id, 
+      {
+        ...task, 
+        title:modalTitle, 
+        message:modalMessage, 
+        // createdAtDate: String(createdAtDate),
+        dueDate: isDue?String(dueDate):String(createdAtDate),
+      }, navigate))
   };
 
   const closeModal = (e) => {
@@ -72,9 +79,9 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
     if(task){
       setModalTitle(task.title)
       setModalMessage(task.message)
-      setIsDue(!(task.dueDate === task.createdAt))
-      const date = new Date(task.dueDate)
-      setDueDate(date)
+      setCreatedAtDate(new Date(task.createdAt))
+      setIsDue(!((new Date(task.dueDate).setHours(0,0,0,0)) === (new Date(task.createdAt).setHours(0,0,0,0))))
+      setDueDate(new Date(task.dueDate))
     }
   }, [task]);
 
@@ -152,6 +159,8 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                           tileContent={(e)=><div className="hover:bg-zinc-400 dark:hover:bg-zinc-900 inline-table float-right p-1"> {
                             e.date.setHours(0,0,0,0)===dueDate.setHours(0,0,0,0)?
                               <div className='rounded-xl bg-red-700 py-2 px-2'></div> 
+                            :e.date.setHours(0,0,0,0)===createdAtDate.setHours(0,0,0,0)?
+                              <div className='rounded-xl bg-green-700 py-2 px-2'></div> 
                             :null
                           }</div>}
                           // TODO make api requests to render data relevant inside tiles "e" holds data information for the given tile  
@@ -159,9 +168,10 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                           next2Label={""}
                           prevLabel={<Label text="Previous"/>}
                           prev2Label={""}
+                          onClickDay={date=>setDueDate(date)}
                           // activeStartDate={dueDate}
-                          onChange={e=>console.log(e)}
-                          value={calendarDate} 
+                          // onChange={e=>console.log(e)}
+                          // value={calendarDate} 
                         />
                         :null
                     }

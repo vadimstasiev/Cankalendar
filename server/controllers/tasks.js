@@ -8,7 +8,6 @@ const router = express.Router();
 
 export const getTasks = async (req, res) => {
     const { page, id } = req.query;
-    console.log(req.query)
     const filter = {projectId: id}
     
     try {
@@ -90,11 +89,11 @@ export const createTask = async (req, res) => {
 
 export const updateTask = async (req, res) => {
     const { id } = req.params;
-    const { title, message, creator } = req.body;
+    const { title, message, creator, dueDate } = req.body;
     
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No task with id: ${id}`);
 
-    const updatedTask = { creator, title, message, _id: id };
+    const updatedTask = { creator, title, message, dueDate, _id: id };
 
     await TaskMessage.findByIdAndUpdate(id, updatedTask, { new: true });
 

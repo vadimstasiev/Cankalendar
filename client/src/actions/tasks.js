@@ -126,6 +126,9 @@ export const updateTask = (id, task, navigate=()=>{}) => async (dispatch) => {
     dispatch({ type: UPDATE, payload: data });
   } catch (error) {
     console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
   }
 };
 
