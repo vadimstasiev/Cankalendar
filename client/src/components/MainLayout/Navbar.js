@@ -31,7 +31,7 @@ const AddMoreItemsIconMenu = props => {
                 <div className="static">
                   <Menu.Items
                     static
-                    className="absolute right-[160px] w-40 mt-6 origin-top-right bg-zinc-300 dark:bg-zinc-900 border border-zinc-200  divide-zinc-100 rounded-md shadow-lg outline-none"
+                    className="absolute right-[160px] w-40 mt-6 origin-top-right bg-zinc-100 dark:bg-zinc-900 border border-zinc-200  divide-zinc-100 rounded-md shadow-lg outline-none"
                   >
                     <div className="py-1">
                       <Menu.Item>
@@ -109,7 +109,7 @@ const ProfileIconMenu = props => {
                 {user?
                   <Menu.Items
                     static
-                    className="absolute right-[65px] w-52 mt-6 origin-top-right bg-zinc-300 dark:bg-zinc-900 border border-zinc-200 divide-y divide-zinc-100 rounded-md shadow-lg outline-none"
+                    className="absolute right-[65px] w-52 mt-6 origin-top-right bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 divide-y divide-zinc-100 rounded-md shadow-lg outline-none"
                   >
                     <div className="px-4 py-3">
                       <p className="text-sm leading-5 text-zinc-900 dark:text-zinc-200">Signed in as</p>
