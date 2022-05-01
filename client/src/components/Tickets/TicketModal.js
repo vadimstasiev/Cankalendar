@@ -5,13 +5,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { LoadingOutlined } from '@ant-design/icons';
 import { getTask, deleteTask, updateTask } from '../../actions/tasks';
+import Calendar from 'react-calendar';
 
+
+const Label = ({text}) => {
+  return <div className="px-4">
+    <div className={"hover:bg-zinc-200 dark:hover:bg-zinc-900 snap-center justify-self-center grid justify-items-stretch px-5 mb-2 py-1 rounded-lg"}>
+      {text}
+    </div>
+  </div>
+}
 
 const TicketModal = ({ id, showModal, setShowModal }) => {
   const navigate = useNavigate()
 
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
+  const [isDue, setIsDue] = useState(false);
+  const [dueDate, setDueDate] = useState("");
 
   const modalRef = useRef();
 
@@ -113,6 +124,35 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                       onChange={handleBodyChange}
                       style={{ resize: "none" }}
                     />
+                    <div className='bg-zinc-200 dark:bg-zinc-700 rounded-xl m-auto w-20 py-1'>
+                      <div className='m-auto inline pl-1'>
+                        <input
+                          className='ml-2'
+                          type="checkbox"
+                          id="topping"
+                          name="topping"
+                          value="Paneer"
+                          checked={isDue}
+                          onChange={(e)=>{setIsDue(e.target.checked)}}
+                        />
+                        <div className='inline pl-3 dark:text-zinc-100'>Due</div>
+                      </div>
+                    </div>
+                    {
+                      isDue?
+                        <Calendar 
+                          className="bg-zinc-100 m-2 p-2 mb-6 shadow-md border-2 dark:bg-zinc-800 dark:text-white rounded-xl" 
+                          tileClassName="pl-2 bg-white hover:bg-zinc-300 hover:dark:bg-zinc-700  text-left align-text-top shadow-sm border-2  dark:bg-zinc-600 dark:border-stone-800 place-content-center justify-center"
+                          tileContent={(e)=><div className="hover:bg-zinc-900"> {console.log("e", e)}</div>}
+                          // TODO make api requests to render data relevant inside tiles "e" holds data information for the given tile  
+                          nextLabel={<Label text="Next"/>}
+                          next2Label={""}
+                          prevLabel={<Label text="Previous"/>}
+                          prev2Label={""}
+                          // onChange={setDate} value={date} 
+                        />
+                        :null
+                    }
                     <div className="flex justify-between">
                       <div
                         tabIndex="0"
