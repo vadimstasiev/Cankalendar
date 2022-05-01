@@ -77,7 +77,7 @@ export const getTask = async (req, res) => {
 export const createTask = async (req, res) => {
     const task = req.body;
 
-    const newTaskMessage = new TaskMessage({ ...task, order: -1, createdAt: new Date().toISOString(), dueDate: new Date().toISOString() })
+    const newTaskMessage = new TaskMessage({ ...task, order: -1, column:1, createdAt: new Date().toISOString(), dueDate: new Date().toISOString() })
 
     try {
         await newTaskMessage.save();
