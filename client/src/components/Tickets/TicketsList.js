@@ -43,7 +43,7 @@ const TicketsList = () => {
     // <div className=" fixed top-0 left-0 right-0 bottom-0 w-full h-screen overflow-hidden bg-white dark:bg-zinc-500 opacity-50 flex flex-col items-center justify-center">
     <div className="top-0 left-0 right-0 bottom-0 w-full mt-60 overflow-hidden flex flex-col items-center justify-center">
       <h2 className="text-center dark:text-white text-lg lg:text-xl font-medium">
-        Notes you add appear here
+        Tickets you add appear here
       </h2>
       <OnScreenRender callback={getCurrentVisibleSection}/>
     </div>
