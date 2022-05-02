@@ -22,8 +22,9 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
   const [isDue, setIsDue] = useState(false);
-  const [createdAtDate, setCreatedAtDate] = useState();
-  const [dueDate, setDueDate] = useState();
+  const [createdAtDate, setCreatedAtDate] = useState(new Date());
+  const [showOnKanban, setShowOnKanban] = useState(false);
+  const [dueDate, setDueDate] = useState(new Date());
 
 
   const modalRef = useRef();
@@ -36,27 +37,31 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
   };
 
   //updates todo when changes are made in modal
-  const updateTodo = () => {
+  const sendUpdatedTask = () => {
+    console.log(isDue, String(dueDate), String(createdAtDate))
+    const tempdate = isDue?String(dueDate):String(createdAtDate)
+    console.log(showOnKanban)
     dispatch(updateTask(id, 
       {
         ...task, 
         title:modalTitle, 
         message:modalMessage, 
         // createdAtDate: String(createdAtDate),
-        dueDate: isDue?String(dueDate):String(createdAtDate),
+        dueDate: tempdate,
+        showOnKanban: showOnKanban
       }, navigate))
   };
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
-      updateTodo();
+      sendUpdatedTask();
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateTodo();
+    sendUpdatedTask();
     setShowModal(false);
   };
 
@@ -83,6 +88,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
       setCreatedAtDate(new Date(task.createdAt))
       setIsDue(!((new Date(task.dueDate).setHours(0,0,0,0)) === (new Date(task.createdAt).setHours(0,0,0,0))))
       setDueDate(new Date(task.dueDate))
+      setShowOnKanban(task.showOnKanban || false)
     }
   }, [task]);
 
@@ -138,14 +144,22 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                       onChange={handleBodyChange}
                       style={{ resize: "none" }}
                     />
-                    <div className=' dark:bg-zinc-700 rounded-xl dark:m-auto w-20 py-1'>
+                    <div className='  rounded-xl w-40 py-1 mb-2 '>
                       <div className='m-auto inline pl-1'>
                         <input
                           className='ml-2'
                           type="checkbox"
-                          id="topping"
-                          name="topping"
-                          value="Paneer"
+                          checked={showOnKanban}
+                          onChange={(e)=>{setShowOnKanban(e.target.checked)}}
+                        />
+                        <div className='inline pl-3 dark:text-zinc-100'>Show on Kanban</div>
+                      </div>
+                    </div>
+                    <div className='  rounded-xl w-20 py-1'>
+                      <div className='m-auto inline pl-1'>
+                        <input
+                          className='ml-2'
+                          type="checkbox"
                           checked={isDue}
                           onChange={(e)=>{setIsDue(e.target.checked)}}
                         />

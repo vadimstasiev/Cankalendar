@@ -15,7 +15,8 @@ const taskSchema = mongoose.Schema({
     dueDate: {
         type: Date,
         default: new Date(),
-    }
+    },
+    showOnKanban: Boolean
 })
 
 var Task = mongoose.model('Task', taskSchema);
