@@ -8,6 +8,7 @@ import { getTasks, getTasksCumulative, getTasksNewerThanDate, setSelectedProject
 import SelectProject from "./SelectProject";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
+import TicketModal from "./Tickets/TicketModal";
 
 
 const Label = ({text}) => {
@@ -18,6 +19,33 @@ const Label = ({text}) => {
   </div>
 }
 
+const CalendarDot = ({task, startDate}) => {
+  const { selectedProject } = useSelector((state) => state.tasks);
+  const [showModal, setShowModal] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const dispatchAndSetShowModal = (show) => {
+    if(!show) {
+      dispatch(getTasksNewerThanDate(startDate, selectedProject.id, navigate))
+    }
+    setShowModal(show)
+  }
+
+  return (
+    <div className='rounded-xl bg-red-700 py-2 px-2 mt-1 hover:bg-zinc-400 dark:hover:bg-zinc-900' onClick={()=>setShowModal(true)}>
+      <TicketModal
+        title={task.title}
+        message={task.message}
+        id={task._id}
+        showModal={showModal}
+        setShowModal={dispatchAndSetShowModal}
+      />
+    </div> 
+  )
+}
+
 const today = new Date();
 
 const CalendarPage = () => {
@@ -25,9 +53,12 @@ const CalendarPage = () => {
   const { tasks, isLoading, selectedProject } = useSelector((state) => state.tasks);
   const [date, setDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date((new Date()).setDate(today.getDate()-7)));
+  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
 
   useEffect(() => {
     console.log(startDate)
@@ -47,11 +78,14 @@ const CalendarPage = () => {
           <Calendar 
           className="bg-zinc-100 shadow-md border-2 dark:bg-zinc-800 dark:text-white mx-10 p-5 rounded-xl" 
           tileClassName="h-20 pb-20 bg-white hover:bg-zinc-300 hover:dark:bg-zinc-700  text-left align-text-top shadow-sm border-2  pl-2 pt-2 dark:bg-zinc-600 dark:border-stone-800 place-content-center justify-center"
-          tileContent={(e)=><div className="hover:bg-zinc-400 dark:hover:bg-zinc-900 inline-table float-right p-1">
+          tileContent={(e)=><div className=" inline-table float-right p-1">
             {
               tasks.map(task => {
-                if (task.dueDate===e.date.setHours(0,0,0,0)) {
-                  return <div className='rounded-xl bg-red-700 py-2 px-2'></div> 
+                // console.log("here", task.dueDate, new Date(e.date.setHours(0,0,0,0)))
+                if(new Date(task.dueDate).setHours(0,0,0,0)!==new Date(task.createdAt).setHours(0,0,0,0)){
+                  if (new Date(task.dueDate).setHours(0,0,0,0)===e.date.setHours(0,0,0,0)) {
+                    return <CalendarDot task={task} startDate={startDate} />
+                  }
                 }
               }
               )
@@ -82,6 +116,8 @@ const CalendarPage = () => {
       </NoiseBackground>
   );
 }
+
+
 
 export default CalendarPage
 
