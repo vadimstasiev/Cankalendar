@@ -149,7 +149,7 @@ export const updateTask = (id, task, navigate=()=>{}) => async (dispatch) => {
 
 export const deleteTask = (id, navigate=()=>{}) => async (dispatch) => {
   try {
-    await await api.deleteTask(id);
+    await api.deleteTask(id);
 
     dispatch({ type: DELETE, payload: id });
   } catch (error) {

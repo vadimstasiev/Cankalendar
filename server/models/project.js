@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const projectSchema = mongoose.Schema({
-    id: String,
+    projectId: String,
     owner: String,
 })
 

@@ -15,7 +15,7 @@ export const getTasks = async (req, res) => {
         const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
     
         const total = await TaskMessage.countDocuments(filter);
-        const tasks = await TaskMessage.find(filter).sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
+        const tasks = await TaskMessage.find(filter).sort({ id: -1 }).limit(LIMIT).skip(startIndex);
 
         res.json({ data: tasks, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     } catch (error) {    
@@ -112,7 +112,7 @@ export const updateTask = async (req, res) => {
     
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No task with id: ${id}`);
 
-    const updatedTask = { creator, title, message, dueDate, _id: id };
+    const updatedTask = { creator, title, message, dueDate, id: id };
 
     await TaskMessage.findByIdAndUpdate(id, updatedTask, { new: true });
 

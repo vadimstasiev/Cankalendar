@@ -71,6 +71,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
   
   useEffect(() => {
     if(showModal){
+      console.log(id)
       dispatch(getTask(id, navigate))
     }
   }, [showModal]);

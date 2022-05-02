@@ -45,10 +45,10 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 //     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-x-4 gap-y-5 mx-4 sm:mx-12 ">
 //       {tasks?.map((list, i) => {
 //         return (
-//           <div key={list._id}>
+//           <div key={list.id}>
 //               {/* <Ticket
 //                 title={list.title}
-//                 id={list._id}
+//                 id={list.id}
 //                 message={list.message}
 //               /> */}
 //             {/* {tasks.length-1 === i?<OnScreenRender callback={getCurrentVisibleSection}/>:null} */}
@@ -113,21 +113,7 @@ const board = {
   ]
 };
 
-const ControlledBoard = () => {
-  // You need to control the state yourself.
-  const [controlledBoard, setBoard] = useState(board);
 
-  function handleCardMove(_card, source, destination) {
-    const updatedBoard = moveCard(controlledBoard, source, destination);
-    setBoard(updatedBoard);
-  }
-
-  return (
-    <Board onCardDragEnd={handleCardMove} disableColumnDrag>
-      {controlledBoard}
-    </Board>
-  );
-}
 
 const UncontrolledBoard = ({id}) => {
   const dispatch = useDispatch()
@@ -141,9 +127,9 @@ const UncontrolledBoard = ({id}) => {
 
   useEffect(() => {
     if(section===1){
-      dispatch(getTasks(1, selectedProject.id))
+      dispatch(getTasks(1, selectedProject?.id))
     } else {
-      dispatch(getTasksCumulative(section, selectedProject.id))
+      dispatch(getTasksCumulative(section, selectedProject?.id))
     }
   }, [section]);
   return (

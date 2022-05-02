@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-import postRoutes from './routes/posts.js';
 import taskRoutes from './routes/tasks.js';
 import userRouter from "./routes/user.js";
 
@@ -14,7 +13,6 @@ app.use(express.json({ limit: '30mb', extended: true }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
-app.use('/posts', postRoutes);
 app.use('/tasks', taskRoutes);
 app.use("/user", userRouter);
 

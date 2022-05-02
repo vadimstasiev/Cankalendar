@@ -22,7 +22,7 @@ export const signin = async (req, res) => {
 
     if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: sessionExpiresIn });
+    const token = jwt.sign({ email: oldUser.email, id: oldUser.id }, secret, { expiresIn: sessionExpiresIn });
 
     res.status(200).json({ result: oldUser, token });
   } catch (err) {
@@ -49,7 +49,7 @@ export const signup = async (req, res) => {
 
     const result = await UserModal.create({ email, password: hashedPassword, name, projects });
 
-    const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: sessionExpiresIn } );
+    const token = jwt.sign( { email: result.email, id: result.id }, secret, { expiresIn: sessionExpiresIn } );
 
     res.status(201).json({ result, token });
   } catch (error) {
@@ -76,7 +76,7 @@ export const createProject = async (req, res) => {
 
     // // add project to projects table
 
-    Project.create({id: newProject.id, owner: userEmail});
+    Project.create({projectId: newProject.id, owner: userEmail});
 
 
     // return updated user object
@@ -97,7 +97,7 @@ export const joinProject = async (req, res) => {
   const filter = { email: userEmail }
 
   try {
-    const existingProject = await Project.findOne({ id: projectId });
+    const existingProject = await Project.findOne({ projectId: projectId });
 
     if (!existingProject) return res.status(400).json({ message: "Project does not exist" });
 
@@ -165,7 +165,7 @@ export const getProjectList = async (req, res) => {
 
 const getProjectNameFromId = async (projectId) => {
   //// find id in projects 
-  const projectInfo = await Project.findOne({ id: projectId })
+  const projectInfo = await Project.findOne({ projectId: projectId })
   //// get owner
   const owner = await UserModal.findOne({email: projectInfo.owner});
   //// find project name from owners projects
