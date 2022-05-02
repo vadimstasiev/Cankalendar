@@ -25,7 +25,6 @@ function Board(props) {
 }
 
 function UncontrolledBoard({
-  initialBoard,
   onCardDragEnd,
   onColumnDragEnd,
   allowAddColumn,
@@ -45,8 +44,11 @@ function UncontrolledBoard({
   disableColumnDrag,
   allowAddCard,
   onNewCardConfirm,
+  board,
+  setBoard
 }) {
-  const [board, setBoard] = useState(initialBoard)
+  // const [board, setBoard] = useState(initialBoard)
+
   const handleOnCardDragEnd = partialRight(handleOnDragEnd, { moveCallback: moveCard, notifyCallback: onCardDragEnd })
   const handleOnColumnDragEnd = partialRight(handleOnDragEnd, {
     moveCallback: moveColumn,
@@ -269,4 +271,4 @@ function BoardContainer({
   )
 }
 
-export default Board
+export default UncontrolledBoard

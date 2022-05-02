@@ -85,21 +85,28 @@ const UncontrolledBoard = ({id}) => {
 
   // return <></>
   return (
-    <Board
-      allowRemoveLane
-      // allowRenameColumn
-      allowRemoveCard
-      onLaneRemove={console.log}
-      onCardRemove={console.log}
-      onLaneRename={console.log}
-      initialBoard={board}
-      // allowAddCard={{ on: "top" }}
-      onNewCardConfirm={draftCard => ({
-        id: new Date().getTime(),
-        ...draftCard
-      })}
-      onCardNew={console.log}
-    />
+    <>
+      {
+       board?
+        <Board
+          allowRemoveLane
+          // allowRenameColumn
+          allowRemoveCard
+          onLaneRemove={console.log}
+          onCardRemove={console.log}
+          onLaneRename={console.log}
+          board={board}
+          setBoard={setBoard}
+          // allowAddCard={{ on: "top" }}
+          onNewCardConfirm={draftCard => ({
+            id: new Date().getTime(),
+            ...draftCard
+          })}
+          onCardNew={console.log}
+        />
+      : null
+      }
+    </>
   );
 }
 
