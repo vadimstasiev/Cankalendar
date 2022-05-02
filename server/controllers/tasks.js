@@ -38,12 +38,13 @@ export const getTasksBySearch = async (req, res) => {
 }
 
 export const getTasksByStartDate = async (req, res) => {
-    const { startDate, projectId } = req.query;
+    const { date, id } = req.query;
     
-    console.log(startDate, projectId)
+    console.log(date, id)
 
-    var cutoff = new Date(startDate)
-    const filter = {projectId: projectId, dueDate: {$lt: cutoff}}
+    var cutoff = new Date(date)
+    console.log(cutoff, date)
+    const filter = {projectId: id, dueDate: {$gte: cutoff}}
     
     try {
     
