@@ -10,55 +10,22 @@ import SelectProject from "../SelectProject";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
 
-const board = {
+const defaultBoard = {
   columns: [
     {
       id: 1,
       title: "Tasks",
-      cards: [
-        {
-          id: 1,
-          title: "Card title 1",
-          description: "Card content"
-        },
-        {
-          id: 2,
-          title: "Card title 2",
-          description: "Card content"
-        },
-        {
-          id: 3,
-          title: "Card title 3",
-          description: "Card content"
-        }
-      ]
+      cards: []
     },
     {
       id: 2,
       title: "Doing",
-      cards: [
-        {
-          id: 9,
-          title: "Card title 9",
-          description: "Card content"
-        }
-      ]
+      cards: []
     },
     {
       id: 3,
       title: "Complete",
-      cards: [
-        {
-          id: 10,
-          title: "Card title 10",
-          description: "Card content"
-        },
-        {
-          id: 11,
-          title: "Card title 11",
-          description: "Card content"
-        }
-      ]
+      cards: []
     }
   ]
 };
@@ -72,19 +39,51 @@ const UncontrolledBoard = ({id}) => {
   const { tasks, isLoading } = useSelector((state) => state.tasks);
   const selectedProject = JSON.parse(localStorage.getItem('selectedProject'));
   const [section, setSection] = useState(1);
-
-  const getCurrentVisibleSection = () => {
-    setSection(section+1)
-  }
+  const [board, setBoard] = useState(defaultBoard);
 
   useEffect(() => {
     dispatch(getTasksForKanban(selectedProject?.id, navigate))
   }, [selectedProject?.id]);
   
   useEffect(() => {
-    console.log("kanban", tasks)
+    const cards = {
+      column1: [],  // tasks
+      column2: [],  // doing
+      column3: [],  // complete
+    }
+    tasks.map(task=> {
+      if(task.column===1){
+        cards.column1.push({id: task._id, title: task.title, description: task.message})
+      } else if(task.column===2){
+        cards.column2.push({id: task._id, title: task.title, description: task.message})
+      } else if(task.column===3){
+        cards.column3.push({id: task._id, title: task.title, description: task.message})
+      }
+    })
+    setBoard(currentBoard => {
+        return {...currentBoard, columns: currentBoard.columns.map(column => {
+              if(column.id===1){
+                return {...column, cards: cards.column1}
+              } else if(column.id===2){
+                return {...column, cards: cards.column2}
+              } else if(column.id===3){
+                return {...column, cards: cards.column3}
+              }
+              return column
+            }
+          )
+        }
+      }
+    )
+    
   }, [tasks]);
 
+  
+  useEffect(() => {
+    console.log("column1", board)
+  }, [board]);
+
+  // return <></>
   return (
     <Board
       allowRemoveLane
