@@ -37,6 +37,24 @@ export const getTasksBySearch = async (req, res) => {
     }
 }
 
+export const getTasksByStartDate = async (req, res) => {
+    const { startDate, projectId } = req.query;
+    
+    console.log(startDate, projectId)
+
+    var cutoff = new Date(startDate)
+    const filter = {projectId: projectId, dueDate: {$lt: cutoff}}
+    
+    try {
+    
+        const tasks = await TaskMessage.find(filter);
+
+        res.json({ data: tasks});
+    } catch (error) {    
+        res.status(404).json({ message: error.message })
+    }
+}
+
 export const getTasksByCreator = async (req, res) => {
     const { name } = req.query;
 

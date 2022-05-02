@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_SINGLE, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, FETCH_BY_CREATOR, LOGOUT, SET_SELECTED_PROJECT, CLEAR } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_SINGLE, FETCH_BY_SEARCH, FETCH_NEW_BY_DATE, CREATE, UPDATE, DELETE, FETCH_BY_CREATOR, LOGOUT, SET_SELECTED_PROJECT, CLEAR } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 import {signout} from './auth'
 
@@ -86,6 +86,21 @@ export const getTasksBySearch = (searchQuery, navigate=()=>{}) => async (dispatc
     const { data: { data } } = await api.fetchTasksBySearch(searchQuery);
 
     dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
+  }
+};
+
+export const getTasksNewerThanDate = (startDate, projectId, navigate=()=>{}) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const { data: { data } } = await api.fetchTasksNewerThanDate(startDate, projectId);
+
+    dispatch({ type: FETCH_NEW_BY_DATE, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);

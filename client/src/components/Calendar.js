@@ -4,7 +4,7 @@ import Background from './Background';
 import Navbar from './MainLayout/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from './MainLayout/Footer';
-import { getTasks, getTasksCumulative, setSelectedProject } from "../actions/tasks";
+import { getTasks, getTasksCumulative, getTasksNewerThanDate, setSelectedProject } from "../actions/tasks";
 import SelectProject from "./SelectProject";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
@@ -18,15 +18,26 @@ const Label = ({text}) => {
   </div>
 }
 
+const today = new Date();
 
 const CalendarPage = () => {
   const { id } = useParams();
-  const { selectedProject } = useSelector((state) => state.tasks);
+  const { tasks, isLoading, selectedProject } = useSelector((state) => state.tasks);
   const [date, setDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date((new Date()).setDate(today.getDate()-7)));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log(startDate)
+    dispatch(getTasksNewerThanDate(startDate, selectedProject.id, navigate))
+    
+  }, [startDate, selectedProject.id]);
+
+  useEffect(() => {
+    console.log(tasks)
+  }, [tasks]);
 
   return (
       <NoiseBackground>
@@ -42,7 +53,15 @@ const CalendarPage = () => {
           next2Label={""}
           prevLabel={<Label text="Previous"/>}
           prev2Label={""}
-          onChange={setDate} value={date} />
+          // activeStartDate
+          onActiveStartDateChange={e=>{
+            var d = new Date(e.activeStartDate);
+            d.setDate(d.getDate()-7);
+            setStartDate(d)
+          }} 
+          onChange={setDate}
+          value={date}
+           />
           {/* <p className='text-center'>
             <span className='bold'>Selected Date:</span>{' '}
             {date.toDateString()}

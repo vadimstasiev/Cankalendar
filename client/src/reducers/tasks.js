@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_BY_SEARCH, FETCH_BY_CREATOR, FETCH_SINGLE, CREATE, UPDATE, DELETE, CLEAR, SET_SELECTED_PROJECT } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FETCH_PAGE, FETCH_PAGE_CUMULATIVE, FETCH_BY_SEARCH, FETCH_NEW_BY_DATE, FETCH_BY_CREATOR, FETCH_SINGLE, CREATE, UPDATE, DELETE, CLEAR, SET_SELECTED_PROJECT } from '../constants/actionTypes';
 
 export default (state = { isLoading: true, tasks: [], selectedProject: {} }, action) => {
   switch (action.type) {
@@ -22,6 +22,8 @@ export default (state = { isLoading: true, tasks: [], selectedProject: {} }, act
       };
     case FETCH_BY_SEARCH:
     case FETCH_BY_CREATOR:
+      return { ...state, tasks: action.payload.data };
+    case FETCH_NEW_BY_DATE:
       return { ...state, tasks: action.payload.data };
     case FETCH_SINGLE:
       return { ...state, task: action.payload.task };
