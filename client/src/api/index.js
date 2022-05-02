@@ -15,6 +15,7 @@ export const fetchTasks = (page, projectId) => API.get(`/tasks?page=${page}&id=$
 export const fetchTasksByCreator = (name) => API.get(`/tasks/creator?name=${name}`);
 export const fetchTasksBySearch = (searchQuery) => API.get(`/tasks/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
 export const fetchTasksNewerThanDate = (startDate, projectId) => API.get(`/tasks/bystartdate?date=${startDate}&id=${projectId}`);
+export const fetchTasksForKanban = (projectId) => API.get(`/tasks/kanban?id=${projectId}`);
 export const createTask = (newTask) => API.post('/tasks', newTask);
 export const updateTask = (id, updatedTask) => API.patch(`/tasks/${id}`, updatedTask);
 export const deleteTask = (id) => API.delete(`/tasks/${id}`);

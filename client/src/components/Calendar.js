@@ -34,7 +34,7 @@ const CalendarDot = ({task, startDate}) => {
   }
 
   return (
-    <div className='rounded-xl bg-red-700 py-2 px-2 mt-1 hover:bg-zinc-400 dark:hover:bg-zinc-900' onClick={()=>setShowModal(true)}>
+    <div className='rounded-xl bg-red-700 inline-block py-2 px-2 mt-1 hover:bg-zinc-400 dark:hover:bg-zinc-900' onClick={()=>setShowModal(true)}>
       <TicketModal
         title={task.title}
         message={task.message}
@@ -61,14 +61,9 @@ const CalendarPage = () => {
 
 
   useEffect(() => {
-    console.log(startDate)
     dispatch(getTasksNewerThanDate(startDate, selectedProject.id, navigate))
     
   }, [startDate, selectedProject.id]);
-
-  useEffect(() => {
-    console.log(tasks)
-  }, [tasks]);
 
   return (
       <NoiseBackground>
@@ -81,7 +76,6 @@ const CalendarPage = () => {
           tileContent={(e)=><div className=" inline-table float-right p-1">
             {
               tasks.map(task => {
-                // console.log("here", task.dueDate, new Date(e.date.setHours(0,0,0,0)))
                 if(new Date(task.dueDate).setHours(0,0,0,0)!==new Date(task.createdAt).setHours(0,0,0,0)){
                   if (new Date(task.dueDate).setHours(0,0,0,0)===e.date.setHours(0,0,0,0)) {
                     return <CalendarDot task={task} startDate={startDate} />
@@ -93,7 +87,6 @@ const CalendarPage = () => {
             
             </div>
           }
-          // TODO make api requests to render data relevant inside tiles "e" holds data information for the given tile  
           nextLabel={<Label text="Next"/>}
           next2Label={""}
           prevLabel={<Label text="Previous"/>}

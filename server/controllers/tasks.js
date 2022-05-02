@@ -56,6 +56,23 @@ export const getTasksByStartDate = async (req, res) => {
     }
 }
 
+export const getTasksForKanban = async (req, res) => {
+    const { id } = req.query;
+    
+    console.log(id)
+
+    const filter = {projectId: id, showOnKanban: true}
+    
+    try {
+    
+        const tasks = await TaskMessage.find(filter);
+
+        res.json({ data: tasks});
+    } catch (error) {    
+        res.status(404).json({ message: error.message })
+    }
+}
+
 export const getTasksByCreator = async (req, res) => {
     const { name } = req.query;
 

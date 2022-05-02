@@ -35,7 +35,6 @@ const SelectProjectDropdown = props => {
     }
 
     useEffect(() => {
-        console.log("user?.result", user?.result)
         dispatch(getprojectslist(user?.result, navigate)).then(async()=>{
             // if selectedProject doesn't exist (page was refreshed or new)
             if(!selectedProject?.name) {
@@ -53,7 +52,6 @@ const SelectProjectDropdown = props => {
             }
             // if selectedProject exists
             else {
-                console.log("selectedProject exists")
                 navigateOption({id: selectedProject.id})
             }
         })

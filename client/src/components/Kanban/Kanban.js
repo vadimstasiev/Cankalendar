@@ -4,7 +4,7 @@ import Background from '../Background';
 import Navbar from '../MainLayout/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../MainLayout/Footer';
-import { getTasks, getTasksCumulative, setSelectedProject } from "../../actions/tasks";
+import { getTasks, getTasksCumulative, getTasksForKanban, setSelectedProject } from "../../actions/tasks";
 import Board, { addColumn, moveCard } from './KanbanBoard'
 import SelectProject from "../SelectProject";
 import { useParams, useNavigate, Link } from 'react-router-dom';
@@ -78,13 +78,12 @@ const UncontrolledBoard = ({id}) => {
   }
 
   useEffect(() => {
-    // if(section===1){
-    //   dispatch(getTasks(1, selectedProject?.id))
-    // } else {
-    //   dispatch(getTasksCumulative(section, selectedProject?.id))
-    // }
+    dispatch(getTasksForKanban(selectedProject?.id, navigate))
   }, []);
 
+  useEffect(() => {
+    console.log("kanban", tasks)
+  }, [tasks]);
 
   return (
     <Board

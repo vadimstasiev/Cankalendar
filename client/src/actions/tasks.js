@@ -95,6 +95,21 @@ export const getTasksBySearch = (searchQuery, navigate=()=>{}) => async (dispatc
   }
 };
 
+export const getTasksForKanban = (projectId, navigate=()=>{}) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const { data: { data } } = await api.fetchTasksForKanban(projectId);
+
+    dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
+  }
+};
+
 export const getTasksNewerThanDate = (startDate, projectId, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
