@@ -53,7 +53,7 @@ const UncontrolledBoard = ({id}) => {
 
   useEffect(() => {
     dispatch(getTasksForKanban(selectedProject?.id, navigate))
-  }, [selectedProject?.id]);
+  }, []);
   
   useEffect(() => {
     // convert received tasks into board tasks
