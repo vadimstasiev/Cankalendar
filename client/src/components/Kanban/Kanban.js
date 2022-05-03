@@ -8,7 +8,39 @@ import { getTasks, getTasksCumulative, getTasksForKanban, setSelectedProject, up
 import Board, { addColumn, moveCard } from './KanbanBoard'
 import SelectProject from "../SelectProject";
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import TicketModal from "../Tickets/TicketModal";
 
+
+const OpenTaskButton = ({card, }) => {
+  const { selectedProject } = useSelector((state) => state.tasks);
+  const [showModal, setShowModal] = useState(false);
+  
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  const dispatchAndSetShowModal = (show) => {
+    if(!show) {
+      dispatch(getTasksForKanban(selectedProject?.id, navigate))
+    }
+    setShowModal(show)
+  }
+
+
+  return (
+    <span style={{ cursor: 'pointer' }} className="text-sm dark:text-zinc-300 rounded-xl py-1 px-4 dark:mb-1 bg-zinc-100 dark:bg-zinc-800" onClick={()=>setShowModal(true)}>
+      Open
+      <TicketModal
+        title={card.task.title}
+        message={card.task.message}
+        id={card.id}
+        showModal={showModal}
+        setShowModal={dispatchAndSetShowModal}
+      />
+    </span> 
+  )
+}
 
 const defaultBoard = {
   columns: [
@@ -40,7 +72,7 @@ const UncontrolledBoard = ({id}) => {
   const selectedProject = JSON.parse(localStorage.getItem('selectedProject'));
   const [section, setSection] = useState(1);
   const [board, setBoard] = useState(defaultBoard);
-  const [ranOnce, setRanOnce] = useState(false)
+  const [mustUpdate, setMustUpdate] = useState(true)
 
   const order = ( a, b ) => {
     if ( a.task.order < b.task.order ){
@@ -59,8 +91,8 @@ const UncontrolledBoard = ({id}) => {
   useEffect(() => {
     // convert received tasks into board tasks
     console.log(tasks?.length)
-    if(!ranOnce && tasks.length!==0){
-      setRanOnce(true)
+    if(mustUpdate && tasks.length!==0){
+      setMustUpdate(false)
       const cards = {
         column1: [],  // tasks
         column2: [],  // doing
@@ -124,12 +156,13 @@ const UncontrolledBoard = ({id}) => {
           onLaneRename={console.log}
           board={board}
           setBoard={setBoard}
+          OpenCard={OpenTaskButton}
+          setMustUpdate={setMustUpdate}
           // allowAddCard={{ on: "top" }}
           onNewCardConfirm={draftCard => ({
             id: new Date().getTime(),
             ...draftCard
           })}
-          onCardNew={console.log}
         />
       : null
       }

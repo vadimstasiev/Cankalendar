@@ -45,7 +45,8 @@ function UncontrolledBoard({
   allowAddCard,
   onNewCardConfirm,
   board,
-  setBoard
+  setBoard, 
+  OpenCard,
 }) {
   // const [board, setBoard] = useState(initialBoard)
 
@@ -131,6 +132,7 @@ function UncontrolledBoard({
             dragging={dragging}
             allowRemoveCard={allowRemoveCard}
             onCardRemove={(card) => handleCardRemove(column, card)}
+            OpenCard={OpenCard}
           >
             {card}
           </DefaultCard>
@@ -189,7 +191,7 @@ function ControlledBoard({
       renderCard={(_column, card, dragging) => {
         if (renderCard) return renderCard(card, { dragging })
         return (
-          <DefaultCard dragging={dragging} allowRemoveCard={allowRemoveCard} onCardRemove={onCardRemove}>
+          <DefaultCard dragging={dragging} allowRemoveCard={allowRemoveCard} onCardRemove={onCardRemove} >
             {card}
           </DefaultCard>
         )

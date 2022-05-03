@@ -1,4 +1,4 @@
-export default function ({ children: card, dragging, allowRemoveCard, onCardRemove }) {
+export default function ({ children: card, dragging, allowRemoveCard, onCardRemove, OpenCard,  }) {
   return (
     <div className={`react-kanban-card dark:bg-zinc-900 rounded-xl shadow-md ${dragging ? 'shadow-2xl' : ''}`}>
       <span>
@@ -9,9 +9,11 @@ export default function ({ children: card, dragging, allowRemoveCard, onCardRemo
               ×
             </span>
           )}
+          {OpenCard && <OpenCard card={card} />}
         </div>
       </span>
       <div className='react-kanban-card__description'>{card.description}</div>
     </div>
   )
 }
+
