@@ -77,7 +77,7 @@ const UncontrolledBoard = ({id}) => {
       }
     )
     console.log("tasks changed")
-  }, [tasks]);
+  }, [tasks, selectedProject?.id]);
 
   
   useEffect(() => {

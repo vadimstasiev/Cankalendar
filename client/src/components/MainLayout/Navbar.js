@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Popover, Transition, Menu } from '@headlessui/react'
 import { Toggle } from "../ThemeToggle";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { AppstoreAddOutlined } from '@ant-design/icons';
 import { ThemeContext } from "../ThemeContext";
 
@@ -9,8 +9,6 @@ import { ThemeContext } from "../ThemeContext";
 const AddMoreItemsIconMenu = props => {
   const { children, customClass } = props 
   const navigate = useNavigate()
-
-  
 
   return (
     <Menu>
@@ -201,6 +199,8 @@ const Header = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const navigate = useNavigate()
 
+  const { id } = useParams();
+
 
 
   const activeSide = "z-50 bg-zinc-300 dark:bg-zinc-900 h-screen w-80 transform transition-all relative duration-700 text-white flex justify-center p-2"
@@ -217,9 +217,9 @@ const Header = () => {
             <div className={isActive ? activeSide:hiddenSide}>
               <ul className="md:flex text-base text-zinc-700 pt-4 pt-14">
                   <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>Toggle Theme</a></li>
-                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/CreateProject')}>Create New Project</a></li>
-                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/Kanban')}>Kanban</a></li>
-                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/Tickets')}>Tickets</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/Kanban/${id||""}`)}>Create New Project</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/Calendar/${id||""}`)}>Kanban</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/Tickets/${id||""}`)}>Tickets</a></li>
                   {
                     user?
                       <>
@@ -254,9 +254,9 @@ const Header = () => {
             <div className="lg:order-3 order-8 hidden md:flex md:items-center md:pt-4 lg:pt-0 w-auto w-full" id="menu">
               <nav>
                 <ul className="md:flex items-center justify-between text-base text-zinc-700 pt-4 md:pt-0">
-                  <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Kanban')}>Kanban</a></li>
-                  <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Calendar')}>Calendar</a></li>
-                  <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate('/Tickets')}>Tickets</a></li>
+                  <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate(`/Kanban/${id||""}`)}>Kanban</a></li>
+                  <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate(`/Calendar/${id||""}`)}>Calendar</a></li>
+                  <li><a className="inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer" onClick={() => navigate(`/Tickets/${id||""}`)}>Tickets</a></li>
                 </ul>
               </nav>
             </div>
