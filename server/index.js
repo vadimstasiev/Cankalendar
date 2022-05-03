@@ -16,7 +16,7 @@ app.use(cors());
 app.use('/tasks', taskRoutes);
 app.use("/user", userRouter);
 
-const CONNECTION_URL = 'mongodb://DockerDiamond:MongoDBhunter24365fd@10.10.10.26';
+const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT|| 5000;
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
