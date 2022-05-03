@@ -38,9 +38,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
 
   //updates todo when changes are made in modal
   const sendUpdatedTask = () => {
-    console.log(isDue, String(dueDate), String(createdAtDate))
     const tempdate = isDue?String(dueDate):String(createdAtDate)
-    console.log(showOnKanban)
     dispatch(updateTask(id, 
       {
         ...task, 
@@ -76,7 +74,6 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
   
   useEffect(() => {
     if(showModal){
-      console.log(id)
       dispatch(getTask(id, navigate))
     }
   }, [showModal]);
@@ -175,7 +172,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
                             e.date.setHours(0,0,0,0)===dueDate.setHours(0,0,0,0)?
                               <div className='rounded-xl bg-red-700 py-2 px-2'></div> 
                             :e.date.setHours(0,0,0,0)===createdAtDate.setHours(0,0,0,0)?
-                              <div className='rounded-xl bg-green-700 py-2 px-2'></div> 
+                              <div className='rounded-xl bg-gray-400 dark:bg-stone-800 py-2 px-2'></div> 
                             :null
                           }</div>}
                           // TODO make api requests to render data relevant inside tiles "e" holds data information for the given tile  

@@ -105,7 +105,6 @@ const UncontrolledBoard = ({id}) => {
           cards.column3.push({id: task._id, title: task.title, description: task.message, task: task})
         }
       })
-      console.log((cards.column3).sort(order), cards.column3)
       setBoard(currentBoard => {
           return {...currentBoard, columns: currentBoard.columns.map(column => {
                 if(column.id===1){
@@ -121,7 +120,6 @@ const UncontrolledBoard = ({id}) => {
           }
         }
       )
-    // console.log("tasks changed")
   }, [tasks, selectedProject?.id]);
 
   
@@ -129,12 +127,10 @@ const UncontrolledBoard = ({id}) => {
     // convert board tasks back into tasks that can be posted
     const updatedTasks = []
     newBoard?.columns?.forEach(column => {
-      // console.log(column.cards)
       column?.cards.forEach((card, i) => {
         updatedTasks.push({order:i, taskId: card.id, column: column.id})
       })
     })
-    // console.log(updatedTasks)
     dispatch(updateKanbanTasks(selectedProject?.id, updatedTasks))
   }
 

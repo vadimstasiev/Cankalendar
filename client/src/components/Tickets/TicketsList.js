@@ -52,7 +52,6 @@ const TicketsList = () => {
       {tasks?.map((list, i) => {
         return (
           <div key={list._id}>
-            {console.log(list)}
             <Ticket
               title={list.title}
               id={list._id}

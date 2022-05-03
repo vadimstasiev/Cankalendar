@@ -6,13 +6,6 @@ import {signout} from './auth'
 export const setSelectedProject = (projectId, projectName, navigate=()=>{}) => async (dispatch) => {
   try {
     dispatch({ type: SET_SELECTED_PROJECT, payload: {id: projectId, name: projectName} });
-    // dispatch refresh projects list
-
-    // get current projects list, (listed in user)
-
-    // select project
-
-    // console.log("here", projectId)
   } catch (error) {
     console.log(error);
     if(error.response.status===401){

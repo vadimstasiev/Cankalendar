@@ -40,10 +40,8 @@ export const getTasksBySearch = async (req, res) => {
 export const getTasksByStartDate = async (req, res) => {
     const { date, id } = req.query;
     
-    console.log(date, id)
 
     var cutoff = new Date(date)
-    console.log(cutoff, date)
     const filter = {projectId: id, dueDate: {$gte: cutoff}}
     
     try {
@@ -59,7 +57,6 @@ export const getTasksByStartDate = async (req, res) => {
 export const getTasksForKanban = async (req, res) => {
     const { id } = req.query;
     
-    console.log(id)
 
     const filter = {projectId: id, showOnKanban: true}
     
@@ -142,7 +139,6 @@ export const updateTasks = async (req, res) => {
     
     
     tasks.map(async task => {
-        console.log(task.taskId)
         if (!mongoose.Types.ObjectId.isValid(task.taskId)) return res.status(404).send(`No task with task.: ${task.taskId}`);
         await TaskMessage.findByIdAndUpdate(task.taskId, {order: task.order, column: task.column}, { new: true });
 
