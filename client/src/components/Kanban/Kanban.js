@@ -46,6 +46,7 @@ const UncontrolledBoard = ({id}) => {
   }, [selectedProject?.id]);
   
   useEffect(() => {
+    // convert received tasks into board tasks
     const cards = {
       column1: [],  // tasks
       column2: [],  // doing
@@ -53,11 +54,11 @@ const UncontrolledBoard = ({id}) => {
     }
     tasks.map(task=> {
       if(task.column===1){
-        cards.column1.push({id: task._id, title: task.title, description: task.message})
+        cards.column1.push({id: task._id, title: task.title, description: task.message, task: task})
       } else if(task.column===2){
-        cards.column2.push({id: task._id, title: task.title, description: task.message})
+        cards.column2.push({id: task._id, title: task.title, description: task.message, task: task})
       } else if(task.column===3){
-        cards.column3.push({id: task._id, title: task.title, description: task.message})
+        cards.column3.push({id: task._id, title: task.title, description: task.message, task: task})
       }
     })
     setBoard(currentBoard => {
@@ -75,13 +76,22 @@ const UncontrolledBoard = ({id}) => {
         }
       }
     )
-    
+    console.log("tasks changed")
   }, [tasks]);
 
   
   useEffect(() => {
-    console.log("column1", board)
-  }, [board]);
+    // convert board tasks back into tasks that can be posted
+    console.log("board changed")
+    const updatedTasks = []
+    board?.columns?.forEach(column => {
+      console.log(column.cards)
+      column?.cards.forEach((card, i) => {
+        updatedTasks.push({order:i, projectId:card.task.projectId, column: column.id})
+      })
+    })
+    console.log(updatedTasks)
+  }, [board.columns]);
 
   // return <></>
   return (
