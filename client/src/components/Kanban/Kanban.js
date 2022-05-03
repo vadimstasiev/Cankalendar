@@ -41,6 +41,16 @@ const UncontrolledBoard = ({id}) => {
   const [section, setSection] = useState(1);
   const [board, setBoard] = useState(defaultBoard);
 
+  const order = ( a, b ) => {
+    if ( a.task.order < b.task.order ){
+      return -1;
+    }
+    if ( a.task.order > b.task.order ){
+      return 1;
+    }
+    return 0;
+  }
+
   useEffect(() => {
     dispatch(getTasksForKanban(selectedProject?.id, navigate))
   }, [selectedProject?.id]);
@@ -61,14 +71,15 @@ const UncontrolledBoard = ({id}) => {
         cards.column3.push({id: task._id, title: task.title, description: task.message, task: task})
       }
     })
+    console.log((cards.column3).sort(order), cards.column3)
     setBoard(currentBoard => {
         return {...currentBoard, columns: currentBoard.columns.map(column => {
               if(column.id===1){
-                return {...column, cards: cards.column1}
+                return {...column, cards: (cards.column1).sort(order)}
               } else if(column.id===2){
-                return {...column, cards: cards.column2}
+                return {...column, cards: (cards.column2).sort(order)}
               } else if(column.id===3){
-                return {...column, cards: cards.column3}
+                return {...column, cards: (cards.column3).sort(order)}
               }
               return column
             }
@@ -76,21 +87,21 @@ const UncontrolledBoard = ({id}) => {
         }
       }
     )
-    console.log("tasks changed")
+    // console.log("tasks changed")
   }, [tasks, selectedProject?.id]);
 
   
   useEffect(() => {
     // convert board tasks back into tasks that can be posted
-    console.log("board changed")
+    // console.log("board changed")
     const updatedTasks = []
     board?.columns?.forEach(column => {
-      console.log(column.cards)
+      // console.log(column.cards)
       column?.cards.forEach((card, i) => {
         updatedTasks.push({order:i, taskId: card.id, column: column.id})
       })
     })
-    console.log(updatedTasks)
+    // console.log(updatedTasks)
     dispatch(updateKanbanTasks(selectedProject?.id, updatedTasks))
   }, [board.columns]);
 
