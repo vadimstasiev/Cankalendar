@@ -164,10 +164,10 @@ export const updateTask = (id, task, navigate=()=>{}) => async (dispatch) => {
 
 export const updateKanbanTasks = (projectId, tasks, navigate=()=>{}) => async (dispatch) => {
   try {
-    await api.updateKanbanTasks(projectId, tasks);
-    // shouldnt be needed to update the tasks themselves as these will be reloaded when navigating to another page
-    // and kanban has its own board state, based on which tasks are updated at the endpoint
-    // on reloading or navigating back to the page, kanban just grabs the tasks from the endpoint
+    dispatch({ type: START_LOADING });
+    const { data: { data } } = await api.updateKanbanTasks(projectId, tasks);
+    dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
     if(error.response.status===401){

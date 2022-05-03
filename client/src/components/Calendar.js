@@ -26,6 +26,8 @@ const CalendarDot = ({task, startDate}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [color, setColor] = useState("bg-red-700");
+
   const dispatchAndSetShowModal = (show) => {
     if(!show) {
       dispatch(getTasksNewerThanDate(startDate, selectedProject.id, navigate))
@@ -33,8 +35,18 @@ const CalendarDot = ({task, startDate}) => {
     setShowModal(show)
   }
 
+  useEffect(() => {
+    if(task.column===1){
+      setColor("bg-red-700")
+    } else if(task.column===2){
+      setColor("bg-yellow-700")
+    } else if(task.column===3){
+      setColor("bg-green-700")
+    }
+  }, []);
+
   return (
-    <div className='rounded-xl bg-red-700 inline-block py-2 px-2 mt-1 hover:bg-zinc-400 dark:hover:bg-zinc-900' onClick={()=>setShowModal(true)}>
+    <div className={`rounded-xl ${color} inline-block py-2 px-2 mt-1 hover:bg-zinc-400 dark:hover:bg-zinc-900`} onClick={()=>setShowModal(true)}>
       <TicketModal
         title={task.title}
         message={task.message}

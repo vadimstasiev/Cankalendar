@@ -148,10 +148,16 @@ export const updateTasks = async (req, res) => {
 
     })
     
-    // const updatedTask = { order, column };
+    const filter = {projectId: id, showOnKanban: true}
+    
+    try {
+    
+        const tasks = await TaskMessage.find(filter);
 
-
-    // res.json(updatedTask);
+        res.json({ data: tasks});
+    } catch (error) {    
+        res.status(404).json({ message: error.message })
+    }
 }
 
 export const deleteTask = async (req, res) => {

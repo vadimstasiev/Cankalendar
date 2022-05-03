@@ -40,6 +40,7 @@ const UncontrolledBoard = ({id}) => {
   const selectedProject = JSON.parse(localStorage.getItem('selectedProject'));
   const [section, setSection] = useState(1);
   const [board, setBoard] = useState(defaultBoard);
+  const [ranOnce, setRanOnce] = useState(false)
 
   const order = ( a, b ) => {
     if ( a.task.order < b.task.order ){
@@ -57,36 +58,40 @@ const UncontrolledBoard = ({id}) => {
   
   useEffect(() => {
     // convert received tasks into board tasks
-    const cards = {
-      column1: [],  // tasks
-      column2: [],  // doing
-      column3: [],  // complete
-    }
-    tasks.map(task=> {
-      if(task.column===1){
-        cards.column1.push({id: task._id, title: task.title, description: task.message, task: task})
-      } else if(task.column===2){
-        cards.column2.push({id: task._id, title: task.title, description: task.message, task: task})
-      } else if(task.column===3){
-        cards.column3.push({id: task._id, title: task.title, description: task.message, task: task})
+    console.log(tasks?.length)
+    if(!ranOnce && tasks.length!==0){
+      setRanOnce(true)
+      const cards = {
+        column1: [],  // tasks
+        column2: [],  // doing
+        column3: [],  // complete
       }
-    })
-    console.log((cards.column3).sort(order), cards.column3)
-    setBoard(currentBoard => {
-        return {...currentBoard, columns: currentBoard.columns.map(column => {
-              if(column.id===1){
-                return {...column, cards: (cards.column1).sort(order)}
-              } else if(column.id===2){
-                return {...column, cards: (cards.column2).sort(order)}
-              } else if(column.id===3){
-                return {...column, cards: (cards.column3).sort(order)}
-              }
-              return column
-            }
-          )
+      tasks.map(task=> {
+        if(task.column===1){
+          cards.column1.push({id: task._id, title: task.title, description: task.message, task: task})
+        } else if(task.column===2){
+          cards.column2.push({id: task._id, title: task.title, description: task.message, task: task})
+        } else if(task.column===3){
+          cards.column3.push({id: task._id, title: task.title, description: task.message, task: task})
         }
-      }
-    )
+      })
+      console.log((cards.column3).sort(order), cards.column3)
+      setBoard(currentBoard => {
+          return {...currentBoard, columns: currentBoard.columns.map(column => {
+                if(column.id===1){
+                  return {...column, cards: (cards.column1).sort(order)}
+                } else if(column.id===2){
+                  return {...column, cards: (cards.column2).sort(order)}
+                } else if(column.id===3){
+                  return {...column, cards: (cards.column3).sort(order)}
+                }
+                return column
+              }
+            )
+          }
+        }
+      )
+    }
     // console.log("tasks changed")
   }, [tasks, selectedProject?.id]);
 
