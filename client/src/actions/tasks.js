@@ -162,6 +162,20 @@ export const updateTask = (id, task, navigate=()=>{}) => async (dispatch) => {
   }
 };
 
+export const updateKanbanTasks = (projectId, tasks, navigate=()=>{}) => async (dispatch) => {
+  try {
+    await api.updateKanbanTasks(projectId, tasks);
+    // shouldnt be needed to update the tasks themselves as these will be reloaded when navigating to another page
+    // and kanban has its own board state, based on which tasks are updated at the endpoint
+    // on reloading or navigating back to the page, kanban just grabs the tasks from the endpoint
+  } catch (error) {
+    console.log(error);
+    if(error.response.status===401){
+      dispatch(signout()).then(()=>navigate("/SignIn"))
+    }
+  }
+};
+
 export const deleteTask = (id, navigate=()=>{}) => async (dispatch) => {
   try {
     await api.deleteTask(id);

@@ -18,6 +18,7 @@ export const fetchTasksNewerThanDate = (startDate, projectId) => API.get(`/tasks
 export const fetchTasksForKanban = (projectId) => API.get(`/tasks/kanban?id=${projectId}`);
 export const createTask = (newTask) => API.post('/tasks', newTask);
 export const updateTask = (id, updatedTask) => API.patch(`/tasks/${id}`, updatedTask);
+export const updateKanbanTasks = (projectId, updatedTasks) => API.patch(`/tasks/updatekanban/${projectId}`, updatedTasks);
 export const deleteTask = (id) => API.delete(`/tasks/${id}`);
 
 export const signIn = (formData) => API.post('/user/signin', formData);

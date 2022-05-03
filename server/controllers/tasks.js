@@ -136,6 +136,24 @@ export const updateTask = async (req, res) => {
     res.json(updatedTask);
 }
 
+export const updateTasks = async (req, res) => {
+    const { id } = req.params;
+    const tasks = req.body;
+    
+    
+    tasks.map(async task => {
+        console.log(task.taskId)
+        if (!mongoose.Types.ObjectId.isValid(task.taskId)) return res.status(404).send(`No task with task.: ${task.taskId}`);
+        await TaskMessage.findByIdAndUpdate(task.taskId, {order: task.order, column: task.column}, { new: true });
+
+    })
+    
+    // const updatedTask = { order, column };
+
+
+    // res.json(updatedTask);
+}
+
 export const deleteTask = async (req, res) => {
     const { id } = req.params;
 

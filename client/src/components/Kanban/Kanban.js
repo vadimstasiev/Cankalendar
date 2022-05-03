@@ -4,7 +4,7 @@ import Background from '../Background';
 import Navbar from '../MainLayout/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../MainLayout/Footer';
-import { getTasks, getTasksCumulative, getTasksForKanban, setSelectedProject } from "../../actions/tasks";
+import { getTasks, getTasksCumulative, getTasksForKanban, setSelectedProject, updateKanbanTasks } from "../../actions/tasks";
 import Board, { addColumn, moveCard } from './KanbanBoard'
 import SelectProject from "../SelectProject";
 import { useParams, useNavigate, Link } from 'react-router-dom';
@@ -87,10 +87,11 @@ const UncontrolledBoard = ({id}) => {
     board?.columns?.forEach(column => {
       console.log(column.cards)
       column?.cards.forEach((card, i) => {
-        updatedTasks.push({order:i, projectId:card.task.projectId, column: column.id})
+        updatedTasks.push({order:i, taskId: card.id, column: column.id})
       })
     })
     console.log(updatedTasks)
+    dispatch(updateKanbanTasks(selectedProject?.id, updatedTasks))
   }, [board.columns]);
 
   // return <></>
@@ -101,7 +102,7 @@ const UncontrolledBoard = ({id}) => {
         <Board
           allowRemoveLane
           // allowRenameColumn
-          allowRemoveCard
+          // allowRemoveCard
           onLaneRemove={console.log}
           onCardRemove={console.log}
           onLaneRename={console.log}
