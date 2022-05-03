@@ -10,14 +10,19 @@ import { useNavigate } from "react-router-dom";
 const TicketsList = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { tasks, isLoading } = useSelector((state) => state.tasks);
-  const selectedProject = JSON.parse(localStorage.getItem('selectedProject'));
+  const { tasks, isLoading, selectedProject } = useSelector((state) => state.tasks);
+  // const selectedProject = JSON.parse(localStorage.getItem('selectedProject'));
   const [currentProject, setCurrentProject] = useState("");
 
   const [section, setSection] = useState(1);
 
   const getCurrentVisibleSection = () => {
     setSection(section+1)
+  }
+
+  const clear = async () => {
+    await dispatch(clearTasks(navigate))
+    setSection(1)
   }
 
   useEffect(() => {
@@ -32,10 +37,14 @@ const TicketsList = () => {
     if(selectedProject.id!==currentProject && !selectedProject.id){
       setCurrentProject(selectedProject.id)
     } else {
-      dispatch(clearTasks(navigate))
-      setSection(1)
+      clear()
     }
-  }, [selectedProject.id]);
+  }, [selectedProject?.id]);
+
+  // useEffect(() => {
+  //   dispatch(clearTasks(navigate))
+  //   setSection(1)
+  // }, [tasks]);
 
 
   //renders the array, returns loading if todo hasn't loaded yet
@@ -56,6 +65,7 @@ const TicketsList = () => {
               title={list.title}
               id={list._id}
               message={list.message}
+              clearCurrentList={clear}
             />
             {tasks.length-1 === i?<OnScreenRender callback={getCurrentVisibleSection}/>:null}
           </div>

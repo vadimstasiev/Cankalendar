@@ -16,7 +16,7 @@ const Label = ({text}) => {
   </div>
 }
 
-const TicketModal = ({ id, showModal, setShowModal }) => {
+const TicketModal = ({ id, showModal, setShowModal, clearCurrentList }) => {
   const navigate = useNavigate()
 
   const [modalTitle, setModalTitle] = useState("");
@@ -54,6 +54,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
       sendUpdatedTask();
+      clearCurrentList()
     }
   };
 
@@ -61,6 +62,7 @@ const TicketModal = ({ id, showModal, setShowModal }) => {
     e.preventDefault();
     sendUpdatedTask();
     setShowModal(false);
+    clearCurrentList()
   };
 
   const handleTitleChange = (e) => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TicketModal from "./TicketModal";
 
-const Ticket = ({ title, id, message }) => {
+const Ticket = ({ title, id, message, clearCurrentList }) => {
   //modal state
   const [showModal, setShowModal] = useState(false);
 
@@ -37,6 +37,7 @@ const Ticket = ({ title, id, message }) => {
         id={id}
         showModal={showModal}
         setShowModal={setShowModal}
+        clearCurrentList={clearCurrentList}
       />
     </section>
   );
