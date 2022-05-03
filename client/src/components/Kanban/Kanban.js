@@ -90,8 +90,6 @@ const UncontrolledBoard = ({id}) => {
   
   useEffect(() => {
     // convert received tasks into board tasks
-    console.log(tasks?.length)
-    if(mustUpdate && tasks.length!==0){
       setMustUpdate(false)
       const cards = {
         column1: [],  // tasks
@@ -123,16 +121,14 @@ const UncontrolledBoard = ({id}) => {
           }
         }
       )
-    }
     // console.log("tasks changed")
   }, [tasks, selectedProject?.id]);
 
   
-  useEffect(() => {
+  const onCardDragEnd = (newBoard) => {
     // convert board tasks back into tasks that can be posted
-    // console.log("board changed")
     const updatedTasks = []
-    board?.columns?.forEach(column => {
+    newBoard?.columns?.forEach(column => {
       // console.log(column.cards)
       column?.cards.forEach((card, i) => {
         updatedTasks.push({order:i, taskId: card.id, column: column.id})
@@ -140,7 +136,7 @@ const UncontrolledBoard = ({id}) => {
     })
     // console.log(updatedTasks)
     dispatch(updateKanbanTasks(selectedProject?.id, updatedTasks))
-  }, [board.columns]);
+  }
 
   // return <></>
   return (
@@ -157,6 +153,7 @@ const UncontrolledBoard = ({id}) => {
           board={board}
           setBoard={setBoard}
           OpenCard={OpenTaskButton}
+          onCardDragEnd={onCardDragEnd}
           setMustUpdate={setMustUpdate}
           // allowAddCard={{ on: "top" }}
           onNewCardConfirm={draftCard => ({
