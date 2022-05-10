@@ -72,7 +72,6 @@ const UncontrolledBoard = ({id}) => {
   const selectedProject = JSON.parse(localStorage.getItem('selectedProject'));
   const [section, setSection] = useState(1);
   const [board, setBoard] = useState(defaultBoard);
-  const [mustUpdate, setMustUpdate] = useState(true)
 
   const order = ( a, b ) => {
     if ( a.task.order < b.task.order ){
@@ -86,11 +85,10 @@ const UncontrolledBoard = ({id}) => {
 
   useEffect(() => {
     dispatch(getTasksForKanban(selectedProject?.id, navigate))
-  }, []);
+  }, [selectedProject?.id]);
   
   useEffect(() => {
     // convert received tasks into board tasks
-      setMustUpdate(false)
       const cards = {
         column1: [],  // tasks
         column2: [],  // doing
@@ -150,7 +148,6 @@ const UncontrolledBoard = ({id}) => {
           setBoard={setBoard}
           OpenCard={OpenTaskButton}
           onCardDragEnd={onCardDragEnd}
-          setMustUpdate={setMustUpdate}
           // allowAddCard={{ on: "top" }}
           onNewCardConfirm={draftCard => ({
             id: new Date().getTime(),
