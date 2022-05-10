@@ -217,18 +217,16 @@ const Header = () => {
             <div className={isActive ? activeSide:hiddenSide}>
               <ul className="md:flex text-base text-zinc-700 pt-4 pt-14">
                   <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>Toggle Theme</a></li>
-                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/Kanban/${id||""}`)}>Create New Project</a></li>
-                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/Calendar/${id||""}`)}>Kanban</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/CreateProject/`)}>Create New Project</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/JoinProject/`)}>Join Project</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/Kanban/${id||""}`)}>Kanban</a></li>
+                  <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/Calendar')}>Calendar</a></li>
                   <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate(`/Tickets/${id||""}`)}>Tickets</a></li>
                   {
                     user?
-                      <>
-                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/AccountSettings')}>Account settings</a></li>
-                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/Calendar')}>Calendar</a></li>
-                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/JoinProject')}>Join Project</a></li>
-                        <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/SignOut')}>Sign Out</a></li>
-
-                      </>
+                    <>
+                      <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/SignOut')}>Sign Out</a></li>
+                    </>
                     :
                       <>
                         <li><a className={`inline-block no-underline font-medium dark:text-zinc-200 dark:hover:text-white hover:underline dark:hover:no-underline py-2 px-4 cursor-pointer transition-all duration-700 ${isActive ? "":hiddenText}`} onClick={() => navigate('/SignIn')}>Sign In</a></li>
