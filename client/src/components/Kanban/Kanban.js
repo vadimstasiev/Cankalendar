@@ -96,7 +96,7 @@ const UncontrolledBoard = ({id}) => {
         column2: [],  // doing
         column3: [],  // complete
       }
-      tasks.map(task=> {
+      tasks?.map(task=> {
         if(task.column===1){
           cards.column1.push({id: task._id, title: task.title, description: task.message, task: task})
         } else if(task.column===2){
