@@ -1,5 +1,6 @@
 # Cankalendar
 
+Cankalendar is a mix of functionality between a Kanban board and a calendar.
 This project is a project management tool and that can be easily self-hosted using docker-compose to deploy the entire application stack.
 
 ## Preview
