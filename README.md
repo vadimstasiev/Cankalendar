@@ -1,9 +1,23 @@
 # Cankalendar
 
-## Server
+This project is a project management tool and that can be easily self-hosted using docker-compose to deploy the entire application stack.
 
-`yarn start`
+## Preview
 
-## Client
+![Alt Text](./IMG/output720p.gif)
 
-`yarn start`
+## Requirements:
+
+- docker
+- docker-compose
+
+## Deployment
+
+Deploy everything with:
+
+
+```
+git clone https://github.com/vadimstasiev/Cankalendar
+cd Cankalendar
+docker-compose up -d
+```
